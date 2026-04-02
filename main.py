@@ -2,21 +2,22 @@ if __name__ == "__main__":
     pass
 
 
-## ----------------- HERE RENATO START ----------------------------
+## ----------------- RENATO'S PART BEGINS HERE ----------------------------
 ##----------------------------------------------------------------
 
 
+# validator.py
 class Validator:
     @staticmethod
     def get_non_empty_string(prompt: str) -> str:
-        """Repite la solicitud hasta obtener un texto válido (no vacío)."""
+        """Repeats the request until a valid (non-empty) text is obtained."""
         while True:
             value = input(prompt).strip()
             if value:
                 return value
             print("Invalid input. This field cannot be empty.")
 
-# Fragmento del flujo en main.py
+# Flow fragment in main.py
 def items_menu_flow(library):
     while True:
         Display.print_menu("Items Menu", ["Add a new item", "View all items"])
@@ -24,12 +25,12 @@ def items_menu_flow(library):
 
         if choice == '1':
             print("Adding a new item...")
-            # Uso de Validator para asegurar datos correctos
+            # Use Validator to ensure correct data
             title = Validator.get_non_empty_string("Enter the item's title: ")
             author = Validator.get_non_empty_string("Enter the item's author: ")
             
             item = library.add_item(title, author)
-            library.save_to_json() # Requerimiento: guardar tras agregar
+            library.save_to_json() # Requirement: save after adding
             Display.print_success(f"Item '{item.id}' with title '{item.title}' added successfully!")
             
         elif choice == '2':
@@ -41,26 +42,26 @@ def items_menu_flow(library):
                 Display.print_items_table(all_items)
         
         elif choice == '0':
-            break # '0' vuelve al menú principal
+            break # '0' returns to the main menu
         else:
             Display.print_error("Invalid choice. Please try again.")
             
         input("<Press Enter to continue>")
 
 ##---------------------------------------------------------------------------------------------------
-##------------------------- PRUEBAS ------------------------------------------------------------
+##------------------------- TEST  ------------------------------------------------------------
 
 """
-# --- ZONA DE EJECUCIÓN ---
+# --- EXECUTION ZONE ---
 if __name__ == "__main__":
-    # 1. Instanciamos la biblioteca
+    # 1. We instantiate the library
     mi_biblioteca = Library()
 
-    # 2. Llamamos al flujo del menú de ítems
-    print("Iniciando el programa de prueba...")
+    # 2. CALL menu flow
+    print("Starting the test program...")
     items_menu_flow(mi_biblioteca)
     
-    print("Programa finalizado.")
+    print("Program completed.")
 
 """
     
