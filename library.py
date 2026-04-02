@@ -7,37 +7,39 @@
 ## -------------- PART 2 ---------------------------------------------------
 ## Implement class Library — item & borrowing management (library.py, part 2)
 
+# library.py (Enriched Library Class)
+
 class Library:
     def __init__(self):
         self.members = []
         self.items = []
 
     def add_item(self, title: str, author: str) -> Item:
-        """Crea, añade y retorna un nuevo Item."""
+        """Creates, adds, and returns a new Item instance."""
         new_id = len(self.items) + 1
         new_item = Item(new_id, title.strip().title(), author.strip().title())
         self.items.append(new_item)
         return new_item
 
     def find_item(self, item_id: int):
-        """Busca un ítem por ID. Retorna None si no existe."""
+        """Searches for an item by ID. Returns None if it does not exist."""
         for item in self.items:
             if item.id == item_id:
                 return item
         return None
 
     def get_all_items(self) -> list:
-        """Retorna la lista completa de ítems."""
+        """Returns the complete list of items."""
         return self.items
 
     def get_available_items(self) -> list:
-        """Retorna solo los ítems que no están prestados."""
+        """Returns only the items that are currently not borrowed."""
         return [item for item in self.items if item.is_available()]
 
     def borrow_item(self, member_id: int, item_id: int, due_date: str) -> bool:
         """
-        Gestiona el préstamo validando casos de borde.
-        Actualiza tanto el objeto Item como la lista del Member.
+        Manages the borrowing process by validating edge cases.
+        Updates both the Item object and the Member's list.
         """
         member = self.find_member(member_id)
         item = self.find_item(item_id)
@@ -56,7 +58,7 @@ class Library:
 
     def return_item(self, member_id: int, item_id: int) -> bool:
         """
-        Gestiona la devolución validando que el ítem pertenezca al miembro.
+        Manages the return process by validating that the item belongs to the member.
         """
         member = self.find_member(member_id)
         item = self.find_item(item_id)
