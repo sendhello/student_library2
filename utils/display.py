@@ -1,31 +1,32 @@
 """Display module for handling display of library items and members."""
 # utils/display.py
+# utils/display.py
 
 class Display:
-    """Clase estática para la interfaz de usuario por consola."""
+    """Static class to handle all console interface outputs."""
 
     @staticmethod
     def print_header(title: str) -> None:
-        """Imprime una barra de título decorada."""
+        """Prints a decorated title bar."""
         print("\n" + "-" * 70)
         print(f"{title.upper():^70}")
         print("-" * 70)
 
     @staticmethod
     def print_menu(title: str, options: list[str]) -> None:
-        """Imprime un menú numerado basado en una lista de opciones."""
+        """Prints a numbered menu based on a list of options."""
         Display.print_header(title)
         for i, option in enumerate(options, 1):
             print(f"{i}. {option}")
-        print("0. Volver")
+        print("0. Back")
 
     @staticmethod
     def print_members_table(members: list) -> None:
-        """Muestra la tabla de miembros con el formato original del library.py."""
+        """Displays the members table with formatting consistent with library.py."""
         print(f"| {'Member ID':10} | {'Name':20} | {'Email':30} | {'Phone':15} | {'Birthdate':12} |")
         print("-" * 100)
         for m in members:
-            # Soporta tanto objetos Member (m.id) como diccionarios (m['id'])
+            # Supports both Member objects and dictionary data
             mid = m.id if hasattr(m, 'id') else m['id']
             name = m.name if hasattr(m, 'name') else m['name']
             email = m.email if hasattr(m, 'email') else m['email']
@@ -36,7 +37,7 @@ class Display:
 
     @staticmethod
     def print_items_table(items: list) -> None:
-        """Muestra la tabla de ítems con estado de disponibilidad."""
+        """Displays the items table showing availability status."""
         print(f"| {'Item ID':10} | {'Title':38} | {'Author':30} | {'Status':10} |")
         print("-" * 100)
         for item in items:
@@ -46,7 +47,7 @@ class Display:
 
     @staticmethod
     def print_grouped_by_date(grouped: dict) -> None:
-        """Imprime ítems agrupados por su fecha de vencimiento."""
+        """Prints items grouped by their specific due dates."""
         for date, items in grouped.items():
             print(f"\nDue Date: {date}")
             print(f"| {'Item ID':10} | {'Title':40} | {'Author':30} |")
@@ -57,22 +58,23 @@ class Display:
 
     @staticmethod
     def print_success(msg: str) -> None:
-        """Muestra un mensaje de éxito."""
+        """Helper to print a success message."""
         print(f"\n>>> SUCCESS: {msg}")
 
     @staticmethod
     def print_error(msg: str) -> None:
-        """Muestra un mensaje de error."""
+        """Helper to print an error message."""
         print(f"\n!!! ERROR: {msg}")
 
 
 
+
 ##---------------------------------------------------------------------------------
-##EN CASO SE DESEE PROBAR O COMO LLAMAR A LAS FUNCIONES
+## IN CASE YOU WANT TO TEST OR HOW TO CALL THE FUNCTIONS
 
 """
 
-# --- ZONA DE PRUEBAS (Copia esto al final de tu archivo display.py) ---
+
 
 if __name__ == "__main__":
     print("--- INICIO DE PRUEBAS DE DISPLAY ---\n")
