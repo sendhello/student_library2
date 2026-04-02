@@ -1,21 +1,23 @@
 """Item class for representing library items."""
 # item.py
 
+# item.py
+
 class Item:
     """
-    Representa un recurso de la biblioteca.
-    Maneja el estado de préstamo y la conversión a diccionarios para persistencia.
+    Represents a library resource.
+    Handles the borrowing status and conversion to dictionaries for persistence.
     """
     def __init__(self, id: int, title: str, author: str):
-        """Inicializa un ítem con ID, título y autor."""
+        """Initializes an item with an ID, title, and author."""
         self.id = id
         self.title = title
         self.author = author
-        self.borrowed_by = None  # Almacena el ID del miembro (int)
-        self.due_date = None     # Formato 'YYYY-MM-DD' (str)
+        self.borrowed_by = None  # Stores the member's ID (int)
+        self.due_date = None     # Format 'YYYY-MM-DD' (str)
 
     def borrow(self, member_id: int, due_date: str) -> bool:
-        """Asigna el ítem a un miembro y establece la fecha de vencimiento."""
+        """Assigns the item to a member and sets the due date."""
         if self.is_available():
             self.borrowed_by = member_id
             self.due_date = due_date
@@ -23,7 +25,7 @@ class Item:
         return False
 
     def return_item(self) -> bool:
-        """Restablece el estado del ítem a disponible."""
+        """Resets the item's status to available."""
         if not self.is_available():
             self.borrowed_by = None
             self.due_date = None
@@ -31,11 +33,11 @@ class Item:
         return False
 
     def is_available(self) -> bool:
-        """Verifica si el ítem no está prestado actualmente."""
+        """Checks if the item is currently not borrowed."""
         return self.borrowed_by is None
 
     def to_dict(self) -> dict:
-        """Convierte la instancia en un diccionario para guardar en JSON."""
+        """Converts the instance into a dictionary for JSON storage."""
         return {
             "id": self.id,
             "title": self.title,
@@ -46,7 +48,7 @@ class Item:
 
     @staticmethod
     def from_dict(data: dict):
-        """Crea un objeto Item a partir de un diccionario de datos."""
+        """Creates an Item object from a data dictionary."""
         item = Item(data['id'], data['title'], data['author'])
         item.borrowed_by = data.get('borrowed_by')
         item.due_date = data.get('due_date')
