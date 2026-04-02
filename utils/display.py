@@ -2,8 +2,10 @@
 # utils/display.py
 # utils/display.py
 
+# utils/display.py
+
 class Display:
-    """Static class to handle all console interface outputs."""
+    """Static class for the console user interface."""
 
     @staticmethod
     def print_header(title: str) -> None:
@@ -22,11 +24,11 @@ class Display:
 
     @staticmethod
     def print_members_table(members: list) -> None:
-        """Displays the members table with formatting consistent with library.py."""
+        """Displays the members table using the original format from library.py."""
         print(f"| {'Member ID':10} | {'Name':20} | {'Email':30} | {'Phone':15} | {'Birthdate':12} |")
         print("-" * 100)
         for m in members:
-            # Supports both Member objects and dictionary data
+            # Supports both Member objects (m.id) and dictionaries (m['id'])
             mid = m.id if hasattr(m, 'id') else m['id']
             name = m.name if hasattr(m, 'name') else m['name']
             email = m.email if hasattr(m, 'email') else m['email']
@@ -37,7 +39,7 @@ class Display:
 
     @staticmethod
     def print_items_table(items: list) -> None:
-        """Displays the items table showing availability status."""
+        """Displays the items table with availability status."""
         print(f"| {'Item ID':10} | {'Title':38} | {'Author':30} | {'Status':10} |")
         print("-" * 100)
         for item in items:
@@ -47,7 +49,7 @@ class Display:
 
     @staticmethod
     def print_grouped_by_date(grouped: dict) -> None:
-        """Prints items grouped by their specific due dates."""
+        """Prints items grouped by their due date."""
         for date, items in grouped.items():
             print(f"\nDue Date: {date}")
             print(f"| {'Item ID':10} | {'Title':40} | {'Author':30} |")
@@ -58,15 +60,13 @@ class Display:
 
     @staticmethod
     def print_success(msg: str) -> None:
-        """Helper to print a success message."""
+        """Displays a success message."""
         print(f"\n>>> SUCCESS: {msg}")
 
     @staticmethod
     def print_error(msg: str) -> None:
-        """Helper to print an error message."""
+        """Displays an error message."""
         print(f"\n!!! ERROR: {msg}")
-
-
 
 
 ##---------------------------------------------------------------------------------
