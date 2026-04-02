@@ -7,7 +7,7 @@
 ## -------------- PART 2 ---------------------------------------------------
 ## Implement class Library — item & borrowing management (library.py, part 2)
 
-# library.py (Enriched Library Class)
+
 
 class Library:
     def __init__(self):
