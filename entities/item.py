@@ -1,16 +1,16 @@
 """Item class for representing library items."""
-# item.py
+from entities.base import BaseEntity
 
-# item.py
 
-class Item:
+class Item(BaseEntity):
     """
     Represents a library resource.
     Handles the borrowing status and conversion to dictionaries for persistence.
     """
-    def __init__(self, id: int, title: str, author: str):
+
+    def __init__(self, item_id: int, title: str, author: str):
         """Initializes an item with an ID, title, and author."""
-        self.id = id
+        super().__init__(item_id)
         self.title = title
         self.author = author
         self.borrowed_by = None  # Stores the member's ID (int)
@@ -46,18 +46,14 @@ class Item:
             "due_date": self.due_date
         }
 
-    @staticmethod
-    def from_dict(data: dict):
+    @classmethod
+    def from_dict(cls, data: dict) -> "Item":
         """Creates an Item object from a data dictionary."""
-        item = Item(data['id'], data['title'], data['author'])
+        item = cls(data['id'], data['title'], data['author'])
         item.borrowed_by = data.get('borrowed_by')
         item.due_date = data.get('due_date')
         return item
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Returns a human-readable string representation."""
         return f"Item ID: {self.id} | Title: {self.title} | Author: {self.author}"
-
-    def __repr__(self):
-        return self.__str__()
-
-

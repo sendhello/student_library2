@@ -89,6 +89,10 @@ class Library:
         if member is None:
             return False
         self.members.remove(member)
+        for item in self.items:
+            if item.borrowed_by == member_id:
+                item.borrowed_by = None
+                item.due_date = None
         return True
 
     # -----------------------------
