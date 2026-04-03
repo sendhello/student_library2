@@ -1,6 +1,5 @@
 """Member class for representing library members."""
-
-from entities.base_entity import BaseEntity
+from entities.base import BaseEntity
 
 
 class Member(BaseEntity):
@@ -34,7 +33,7 @@ class Member(BaseEntity):
     def to_dict(self) -> dict:
         """Converts the instance into a dictionary for JSON storage."""
         return {
-            "member_id": self.member_id,
+            "id": self.id,  # ✅ use BaseEntity property
             "name": self.name,
             "birthdate": self.birthdate,
             "email": self.email,
@@ -46,7 +45,7 @@ class Member(BaseEntity):
     def from_dict(cls, data: dict):
         """Creates a Member object from a dictionary."""
         member = cls(
-            member_id=data["member_id"],
+            member_id=data["id"],  # ✅ matches BaseEntity
             name=data["name"],
             birthdate=data["birthdate"],
             email=data["email"],
@@ -54,6 +53,5 @@ class Member(BaseEntity):
         )
         member.borrowed_items = data.get("borrowed_items", [])
         return member
-
 
       
