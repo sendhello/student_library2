@@ -8,6 +8,11 @@ class Validator:
     """Provides static validation methods."""
 
     @staticmethod
+    def validate_name(name: str) -> bool:
+        """Validates member name: non-empty, max 50 characters."""
+        return bool(name and name.strip()) and len(name.strip()) <= 50
+
+    @staticmethod
     def validate_non_empty(value: str) -> bool:
         """Checks that a string is not empty."""
         return bool(value and value.strip())

@@ -1,4 +1,4 @@
-"""Tests for the Library class — TASK-06."""
+"""Tests for the Library class and entity classes."""
 
 import json
 import os
@@ -6,6 +6,9 @@ import tempfile
 import unittest
 
 from library import Library
+from entities.item import Item
+from entities.member import Member
+from entities.base import BaseEntity
 
 
 class TestLibraryInit(unittest.TestCase):
@@ -96,6 +99,100 @@ class TestRemoveMember(unittest.TestCase):
         """Removing member 1 must not remove member 2."""
         self.lib.remove_member(1)
         self.assertIsNotNone(self.lib.find_member(2))
+
+    def test_remove_member_clears_borrowed_by_on_items(self):
+        """Removing a member must clear borrowed_by on any items they had borrowed."""
+        item = self.lib.add_item("Clean Code", "Robert Martin")
+        self.lib.borrow_item(1, item.id, "2026-05-01")
+        self.lib.remove_member(1)
+        self.assertIsNone(item.borrowed_by)
+        self.assertIsNone(item.due_date)
+
+
+class TestAddItem(unittest.TestCase):
+    """Tests for add_item."""
+
+    def setUp(self):
+        self.lib = Library()
+
+    def test_add_item_returns_item_with_correct_fields(self):
+        """add_item must return an Item with correct title and author."""
+        item = self.lib.add_item("Clean Code", "Robert Martin")
+        self.assertEqual(item.title, "Clean Code")
+        self.assertEqual(item.author, "Robert Martin")
+
+    def test_add_item_assigns_sequential_id(self):
+        """Each added item must receive an incrementing integer ID."""
+        i1 = self.lib.add_item("Clean Code", "Robert Martin")
+        i2 = self.lib.add_item("The Pragmatic Programmer", "Hunt & Thomas")
+        self.assertEqual(i1.id, 1)
+        self.assertEqual(i2.id, 2)
+
+    def test_add_item_is_available_by_default(self):
+        """Newly added item must be available (not borrowed)."""
+        item = self.lib.add_item("Clean Code", "Robert Martin")
+        self.assertTrue(item.is_available())
+
+
+class TestBorrowReturnItem(unittest.TestCase):
+    """Tests for borrow_item and return_item."""
+
+    def setUp(self):
+        self.lib = Library()
+        self.member = self.lib.add_member("Alice", "a@b.com", "0400000001", "1990-01-01")
+        self.item = self.lib.add_item("Clean Code", "Robert Martin")
+
+    def test_borrow_item_returns_true(self):
+        """borrow_item must return True on success."""
+        result = self.lib.borrow_item(self.member.id, self.item.id, "2026-05-01")
+        self.assertTrue(result)
+
+    def test_borrow_item_marks_item_unavailable(self):
+        """After borrowing, item must not be available."""
+        self.lib.borrow_item(self.member.id, self.item.id, "2026-05-01")
+        self.assertFalse(self.item.is_available())
+
+    def test_borrow_item_adds_to_member_borrowed_items(self):
+        """After borrowing, item ID must appear in member's borrowed_items."""
+        self.lib.borrow_item(self.member.id, self.item.id, "2026-05-01")
+        self.assertIn(self.item.id, self.member.borrowed_items)
+
+    def test_borrow_already_borrowed_item_returns_false(self):
+        """Borrowing an already-borrowed item must return False."""
+        self.lib.borrow_item(self.member.id, self.item.id, "2026-05-01")
+        result = self.lib.borrow_item(self.member.id, self.item.id, "2026-06-01")
+        self.assertFalse(result)
+
+    def test_borrow_nonexistent_member_returns_false(self):
+        """borrow_item with unknown member ID must return False."""
+        self.assertFalse(self.lib.borrow_item(999, self.item.id, "2026-05-01"))
+
+    def test_borrow_nonexistent_item_returns_false(self):
+        """borrow_item with unknown item ID must return False."""
+        self.assertFalse(self.lib.borrow_item(self.member.id, 999, "2026-05-01"))
+
+    def test_return_item_returns_true(self):
+        """return_item must return True when item is successfully returned."""
+        self.lib.borrow_item(self.member.id, self.item.id, "2026-05-01")
+        result = self.lib.return_item(self.member.id, self.item.id)
+        self.assertTrue(result)
+
+    def test_return_item_makes_item_available_again(self):
+        """After returning, item must be available again."""
+        self.lib.borrow_item(self.member.id, self.item.id, "2026-05-01")
+        self.lib.return_item(self.member.id, self.item.id)
+        self.assertTrue(self.item.is_available())
+
+    def test_return_item_removes_from_member_borrowed_items(self):
+        """After returning, item ID must be removed from member's borrowed_items."""
+        self.lib.borrow_item(self.member.id, self.item.id, "2026-05-01")
+        self.lib.return_item(self.member.id, self.item.id)
+        self.assertNotIn(self.item.id, self.member.borrowed_items)
+
+    def test_return_item_not_borrowed_by_member_returns_false(self):
+        """return_item when member didn't borrow the item must return False."""
+        result = self.lib.return_item(self.member.id, self.item.id)
+        self.assertFalse(result)
 
 
 class TestJsonPersistence(unittest.TestCase):
@@ -197,6 +294,122 @@ class TestJsonPersistence(unittest.TestCase):
         lib.load_from_json()
         self.assertEqual(lib.members, [])
         self.assertEqual(lib.items, [])
+
+
+class TestItemBaseEntity(unittest.TestCase):
+    """Tests confirming Item properly inherits BaseEntity."""
+
+    def test_item_is_instance_of_base_entity(self):
+        """Item must be a subclass of BaseEntity."""
+        item = Item(1, "Clean Code", "Robert Martin")
+        self.assertIsInstance(item, BaseEntity)
+
+    def test_item_id_via_property(self):
+        """Item.id must return the value passed to the constructor."""
+        item = Item(42, "Clean Code", "Robert Martin")
+        self.assertEqual(item.id, 42)
+
+    def test_item_id_is_read_only(self):
+        """Assigning to item.id must raise AttributeError."""
+        item = Item(1, "Clean Code", "Robert Martin")
+        with self.assertRaises(AttributeError):
+            setattr(item, "id", 99)
+
+    def test_item_equality_by_id(self):
+        """Two Items with the same ID must be equal regardless of title."""
+        item_a = Item(5, "Title A", "Author A")
+        item_b = Item(5, "Title B", "Author B")
+        self.assertEqual(item_a, item_b)
+
+    def test_item_inequality_different_id(self):
+        """Two Items with different IDs must not be equal."""
+        self.assertNotEqual(Item(1, "A", "A"), Item(2, "A", "A"))
+
+    def test_item_from_dict_is_classmethod(self):
+        """from_dict must be a classmethod and return an Item instance."""
+        data = {"id": 3, "title": "Refactoring", "author": "Fowler",
+                "borrowed_by": None, "due_date": None}
+        item = Item.from_dict(data)
+        self.assertIsInstance(item, Item)
+        self.assertEqual(item.id, 3)
+        self.assertEqual(item.title, "Refactoring")
+
+
+class TestMemberEntity(unittest.TestCase):
+    """Tests for Member class behaviour."""
+
+    def test_member_is_instance_of_base_entity(self):
+        """Member must be a subclass of BaseEntity."""
+        m = Member(1, "Alice", "a@b.com", "0400000001", "1990-01-01")
+        self.assertIsInstance(m, BaseEntity)
+
+    def test_member_borrow_item_adds_id(self):
+        """borrow_item must add the item ID to borrowed_items."""
+        m = Member(1, "Alice", "a@b.com", "0400000001", "1990-01-01")
+        m.borrow_item(7)
+        self.assertIn(7, m.borrowed_items)
+
+    def test_member_borrow_item_no_duplicates(self):
+        """Calling borrow_item twice with same ID must not add a duplicate."""
+        m = Member(1, "Alice", "a@b.com", "0400000001", "1990-01-01")
+        m.borrow_item(7)
+        m.borrow_item(7)
+        self.assertEqual(m.borrowed_items.count(7), 1)
+
+    def test_member_return_item_removes_id(self):
+        """return_item must remove the item ID from borrowed_items."""
+        m = Member(1, "Alice", "a@b.com", "0400000001", "1990-01-01")
+        m.borrow_item(7)
+        m.return_item(7)
+        self.assertNotIn(7, m.borrowed_items)
+
+    def test_member_get_borrowed_items(self):
+        """get_borrowed_items must return the current list of borrowed IDs."""
+        m = Member(1, "Alice", "a@b.com", "0400000001", "1990-01-01")
+        m.borrow_item(3)
+        m.borrow_item(5)
+        self.assertEqual(m.get_borrowed_items(), [3, 5])
+
+    def test_member_from_dict_round_trip(self):
+        """to_dict → from_dict must produce an equivalent Member."""
+        m = Member(1, "Alice", "alice@example.com", "0412345678", "1990-01-01")
+        m.borrow_item(2)
+        restored = Member.from_dict(m.to_dict())
+        self.assertEqual(restored.id, m.id)
+        self.assertEqual(restored.email, m.email)
+        self.assertEqual(restored.phone, m.phone)
+        self.assertEqual(restored.birthdate, m.birthdate)
+        self.assertEqual(restored.borrowed_items, m.borrowed_items)
+
+
+class TestGetAvailableAndFindItem(unittest.TestCase):
+    """Tests for Library.get_available_items and find_item."""
+
+    def setUp(self):
+        self.lib = Library()
+        self.member = self.lib.add_member("Alice", "a@b.com", "0400000001", "1990-01-01")
+        self.item1 = self.lib.add_item("Clean Code", "Martin")
+        self.item2 = self.lib.add_item("Refactoring", "Fowler")
+        self.lib.borrow_item(self.member.id, self.item1.id, "2026-05-01")
+
+    def test_get_available_items_excludes_borrowed(self):
+        """get_available_items must not include borrowed items."""
+        available = self.lib.get_available_items()
+        self.assertNotIn(self.item1, available)
+
+    def test_get_available_items_includes_free(self):
+        """get_available_items must include non-borrowed items."""
+        available = self.lib.get_available_items()
+        self.assertIn(self.item2, available)
+
+    def test_find_item_returns_correct_item(self):
+        """find_item must return the item matching the given ID."""
+        found = self.lib.find_item(self.item2.id)
+        self.assertEqual(found, self.item2)
+
+    def test_find_item_returns_none_for_unknown_id(self):
+        """find_item with unknown ID must return None."""
+        self.assertIsNone(self.lib.find_item(999))
 
 
 if __name__ == "__main__":

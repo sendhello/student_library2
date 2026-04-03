@@ -8,7 +8,7 @@ class Member(BaseEntity):
     Stores personal details and borrowed items.
     """
 
-    def __init__(self, member_id: int, name: str, birthdate: str, email: str, phone: str):
+    def __init__(self, member_id: int, name: str, email: str, phone: str, birthdate: str):
         super().__init__(member_id)
         self.name = name
         self.birthdate = birthdate
@@ -45,13 +45,19 @@ class Member(BaseEntity):
     def from_dict(cls, data: dict):
         """Creates a Member object from a dictionary."""
         member = cls(
-            member_id=data["id"],  # ✅ matches BaseEntity
+            member_id=data["id"],
             name=data["name"],
-            birthdate=data["birthdate"],
             email=data["email"],
-            phone=data["phone"]
+            phone=data["phone"],
+            birthdate=data["birthdate"]
         )
         member.borrowed_items = data.get("borrowed_items", [])
         return member
 
-      
+    def __str__(self) -> str:
+        """Returns a human-readable string representation."""
+        return f"Member ID: {self.id} | Name: {self.name} | Email: {self.email} | Phone: {self.phone} | Birthdate: {self.birthdate}"
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
