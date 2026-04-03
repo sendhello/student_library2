@@ -1,32 +1,33 @@
 """Validator module for validating library data."""
+
+from datetime import datetime
+import re
+
+
 class Validator:
-    @staticmethod
-    def get_non_empty_string(prompt: str) -> str:
-        """Repeats input until a non-empty value is entered."""
-        while True:
-            value = input(prompt).strip()
-            if value:
-                return value
-            print("Invalid input. This field cannot be empty.")
+    """Provides static validation methods."""
 
     @staticmethod
-    def validate_member_id(member_id):
-        """Validate member ID"""
-        return str(member_id).strip() != ""
+    def validate_non_empty(value: str) -> bool:
+        """Checks that a string is not empty."""
+        return bool(value and value.strip())
 
     @staticmethod
-    def validate_name(name):
-        """Validate member name"""
-        return str(name).strip() != ""
+    def validate_email(email: str) -> bool:
+        """Validates basic email format."""
+        pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+        return bool(re.match(pattern, email))
 
     @staticmethod
-    def validate_email(email):
-        """Validate email address"""
-        email = str(email).strip()
-        return "@" in email and "." in email and len(email) >= 5
+    def validate_phone(phone: str) -> bool:
+        """Validates phone number (digits only, 7–15 chars)."""
+        return phone.isdigit() and 7 <= len(phone) <= 15
 
     @staticmethod
-    def validate_phone(phone):
-        """Validate phone number"""
-        phone = str(phone).strip()
-        return phone.isdigit() and len(phone) >= 8
+    def validate_date(date_str: str) -> bool:
+        """Validates date format (YYYY-MM-DD)."""
+        try:
+            datetime.strptime(date_str, "%Y-%m-%d")
+            return True
+        except ValueError:
+            return False
