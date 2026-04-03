@@ -1,26 +1,41 @@
 """Member class for representing library members."""
 class Member:
-    def __init__(self, member_id, name, email, phone):
+    """
+    Represents a library member.
+    Stores personal details and borrowed items.
+    """
+    def __init__(self, member_id: int, name: str, email: str, phone: str):
         self.member_id = member_id
         self.name = name
         self.email = email
         self.phone = phone
         self.borrowed_items = []
 
-    def borrow_item(self, item):
-        """Add an item to borrowed list"""
-        self.borrowed_items.append(item)
+    def to_dict(self) -> dict:
+        """Converts the instance into a dictionary for JSON storage."""
+        return {
+            "member_id": self.member_id,
+            "name": self.name,
+            "email": self.email,
+            "phone": self.phone,
+            "borrowed_items": self.borrowed_items
+        }
 
-    def return_item(self, item):
-        """Remove an item from borrowed list"""
-        if item in self.borrowed_items:
-            self.borrowed_items.remove(item)
+    @staticmethod
+    def from_dict(data: dict):
+        """Creates a Member object from a data dictionary."""
+        member = Member(
+            data["member_id"],
+            data["name"],
+            data["email"],
+            data["phone"]
+        )
+        member.borrowed_items = data.get("borrowed_items", [])
+        return member
 
-    def display_info(self):
-        """Display member information"""
-        print(f"\nMember ID: {self.member_id}")
-        print(f"Name: {self.name}")
-        print(f"Email: {self.email}")
-        print(f"Phone: {self.phone}")
-        print(f"Borrowed Items: {self.borrowed_items}")
+    def __str__(self):
+        return f"Member ID: {self.member_id} | Name: {self.name} | Email: {self.email} | Phone: {self.phone}"
+
+    def __repr__(self):
+        return self.__str__()
       
