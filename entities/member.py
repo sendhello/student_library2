@@ -1,41 +1,59 @@
 """Member class for representing library members."""
-class Member:
+
+from entities.base_entity import BaseEntity
+
+
+class Member(BaseEntity):
     """
     Represents a library member.
     Stores personal details and borrowed items.
     """
-    def __init__(self, member_id: int, name: str, email: str, phone: str):
-        self.member_id = member_id
+
+    def __init__(self, member_id: int, name: str, birthdate: str, email: str, phone: str):
+        super().__init__(member_id)
         self.name = name
+        self.birthdate = birthdate
         self.email = email
         self.phone = phone
         self.borrowed_items = []
+
+    def borrow_item(self, item_id: int) -> None:
+        """Adds an item ID to the member's borrowed items list."""
+        if item_id not in self.borrowed_items:
+            self.borrowed_items.append(item_id)
+
+    def return_item(self, item_id: int) -> None:
+        """Removes an item ID from the member's borrowed items list."""
+        if item_id in self.borrowed_items:
+            self.borrowed_items.remove(item_id)
+
+    def get_borrowed_items(self) -> list:
+        """Returns the list of borrowed item IDs."""
+        return self.borrowed_items
 
     def to_dict(self) -> dict:
         """Converts the instance into a dictionary for JSON storage."""
         return {
             "member_id": self.member_id,
             "name": self.name,
+            "birthdate": self.birthdate,
             "email": self.email,
             "phone": self.phone,
             "borrowed_items": self.borrowed_items
         }
 
-    @staticmethod
-    def from_dict(data: dict):
-        """Creates a Member object from a data dictionary."""
-        member = Member(
-            data["member_id"],
-            data["name"],
-            data["email"],
-            data["phone"]
+    @classmethod
+    def from_dict(cls, data: dict):
+        """Creates a Member object from a dictionary."""
+        member = cls(
+            member_id=data["member_id"],
+            name=data["name"],
+            birthdate=data["birthdate"],
+            email=data["email"],
+            phone=data["phone"]
         )
         member.borrowed_items = data.get("borrowed_items", [])
         return member
 
-    def __str__(self):
-        return f"Member ID: {self.member_id} | Name: {self.name} | Email: {self.email} | Phone: {self.phone}"
 
-    def __repr__(self):
-        return self.__str__()
       
