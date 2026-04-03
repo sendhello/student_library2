@@ -85,9 +85,9 @@ def members_menu_flow(library):
             if hasattr(library, "save_to_json"):
                 library.save_to_json()
 
-            Display.print_success(
-                f"Member '{member.id}' with name '{member.name}' added successfully!"
-            )
+                Display.print_success(
+                    f"Member '{member.id}' with name '{member.name}' added successfully!"
+                )
 
         elif choice == '2':
             all_members = library.get_all_members()

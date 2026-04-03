@@ -24,6 +24,7 @@ git checkout -b feature/TASK-02-member-class
 ```
 
 Branch naming convention:
+
 - `feature/TASK-XX-short-description` — new functionality
 - `fix/TASK-XX-short-description` — bug fix
 
@@ -69,7 +70,7 @@ Repeat add → commit → push as you work. Commit often.
 
 In the PR description, add this line:
 
-```
+```txt
 Closes #3
 ```
 
@@ -138,7 +139,7 @@ git push origin feature/TASK-02-member-class
 ## Quick reference
 
 | Action | Command |
-|---|---|
+| --- | --- |
 | Create branch | `git checkout -b feature/TASK-XX-name` |
 | Stage all changes | `git add .` |
 | Commit | `git commit -m "TASK-XX: message"` |
