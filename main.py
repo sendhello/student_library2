@@ -1,10 +1,10 @@
 from library import Library
 from utils.validator import Validator
-from utils.display import Display   # change this if your display file is elsewhere
+from utils.display import Display
 
 
 ## ----------------- RENATO'S PART BEGINS HERE ----------------------------
-##----------------------------------------------------------------
+## -----------------------------------------------------------------------
 
 def items_menu_flow(library):
     while True:
@@ -13,15 +13,25 @@ def items_menu_flow(library):
 
         if choice == '1':
             print("Adding a new item...")
-            title = Validator.get_non_empty_string("Enter the item's title: ")
-            author = Validator.get_non_empty_string("Enter the item's author: ")
+
+            title = input("Enter the item's title: ")
+            while not Validator.validate_non_empty(title):
+                Display.print_error("Title cannot be empty.")
+                title = input("Enter the item's title: ")
+
+            author = input("Enter the item's author: ")
+            while not Validator.validate_non_empty(author):
+                Display.print_error("Author cannot be empty.")
+                author = input("Enter the item's author: ")
 
             item = library.add_item(title, author)
 
             if hasattr(library, "save_to_json"):
                 library.save_to_json()
 
-            Display.print_success(f"Item '{item.id}' with title '{item.title}' added successfully!")
+            Display.print_success(
+                f"Item '{item.id}' with title '{item.title}' added successfully!"
+            )
 
         elif choice == '2':
             all_items = library.get_all_items()
@@ -40,7 +50,7 @@ def items_menu_flow(library):
 
 
 ## ----------------- YOUR PART BEGINS HERE ----------------------------
-##----------------------------------------------------------------
+## -------------------------------------------------------------------
 
 def members_menu_flow(library):
     while True:
@@ -50,25 +60,34 @@ def members_menu_flow(library):
         if choice == '1':
             print("Adding a new member...")
 
-            name = Validator.get_non_empty_string("Enter member name: ")
-            email = Validator.get_non_empty_string("Enter member email: ")
-            phone = Validator.get_non_empty_string("Enter member phone: ")
+            name = input("Enter member name: ")
+            while not Validator.validate_non_empty(name):
+                Display.print_error("Name cannot be empty.")
+                name = input("Enter member name: ")
 
-            if not Validator.validate_name(name):
-                Display.print_error("Invalid name.")
-            elif not Validator.validate_email(email):
+            birthdate = input("Enter member birthdate (YYYY-MM-DD): ")
+            while not Validator.validate_date(birthdate):
+                Display.print_error("Invalid birthdate. Use YYYY-MM-DD format.")
+                birthdate = input("Enter member birthdate (YYYY-MM-DD): ")
+
+            email = input("Enter member email: ")
+            while not Validator.validate_email(email):
                 Display.print_error("Invalid email format.")
-            elif not Validator.validate_phone(phone):
+                email = input("Enter member email: ")
+
+            phone = input("Enter member phone: ")
+            while not Validator.validate_phone(phone):
                 Display.print_error("Invalid phone number.")
-            else:
-                member = library.add_member(name, email, phone)
+                phone = input("Enter member phone: ")
 
-                if hasattr(library, "save_to_json"):
-                    library.save_to_json()
+            member = library.add_member(name, birthdate, email, phone)
 
-                Display.print_success(
-                    f"Member '{member.member_id}' with name '{member.name}' added successfully!"
-                )
+            if hasattr(library, "save_to_json"):
+                library.save_to_json()
+
+            Display.print_success(
+                f"Member '{member.id}' with name '{member.name}' added successfully!"
+            )
 
         elif choice == '2':
             all_members = library.get_all_members()
@@ -88,6 +107,7 @@ def members_menu_flow(library):
         input("<Press Enter to continue>")
 
 
+
 """
 # --- EXECUTION ZONE ---
 if __name__ == "__main__":
@@ -97,6 +117,5 @@ if __name__ == "__main__":
     print("Program completed.")
 """
 
-"""
     
 
