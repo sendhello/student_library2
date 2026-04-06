@@ -53,6 +53,12 @@ Library  ─ uses ──────▶  Display
 
 ---
 
+## Flowchart
+
+![Application Flowchart](Flowchart.png)
+
+---
+
 ## Project Structure
 
 ```text
