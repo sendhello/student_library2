@@ -65,12 +65,14 @@ Library  ─ uses ──────▶  Display
 student-library2/
 ├── main.py                              # Entry point
 ├── library.py                           # Library class
-├── member.py                            # Member class
-├── item.py                              # Item class
+├── entities/
+│   ├── base.py                          # BaseEntity abstract class
+│   ├── member.py                        # Member class
+│   └── item.py                          # Item class
 ├── utils/
 │   ├── validator.py                     # Validator utility class
 │   └── display.py                       # Display utility class
-├── student_library_class_diagram.drawio # Class diagram
+├── data.json                            # JSON persistence file
 └── README.md
 ```
 
