@@ -1,0 +1,301 @@
+book_id,title,author,faculty,year,copies
+1,Networks for Professionals,R. Singh,Technology,2025,5
+2,The Art of Leadership,C. Morales,Business,2016,5
+3,The Entrepreneurship Handbook,R. Singh,Business,2013,3
+4,Frontiers of Supply Chain,D. Roy,Business,2025,5
+5,Frontiers of Visual Communication,R. Patel,Design,2017,4
+6,Thinking in Marketing,J. Smith,Business,2016,3
+7,Branding in Practice,P. Silva,Business,2018,3
+8,Typography and Society,J. Smith,Design,2025,4
+9,Mastering Anatomy,Q. Rahman,Health,2017,5
+10,The Science of Rehabilitation,X. Suzuki,Health,2012,4
+11,Software Engineering Fundamentals,R. Singh,Technology,2010,4
+12,Principles of Rehabilitation,G. Martin,Health,2023,5
+13,Exploring Computer Graphics,J. Okafor,Technology,2019,1
+14,Exploring Graphic Design,G. Martin,Design,2015,5
+15,The Art of Rehabilitation,U. Erdogan,Health,2012,4
+16,The Interaction Design Handbook,R. Singh,Design,2022,5
+17,Principles of Cybersecurity,V. Rossi,Technology,2020,2
+18,Distributed Systems and Society,N. Dubois,Technology,2012,5
+19,Beyond Algorithms,T. Hoffmann,Technology,2016,3
+20,Understanding Service Design,H. Tanaka,Design,2017,1
+21,Foundations of Web Development,I. Volkov,Technology,2015,5
+22,Foundations of Branding,S. Anderson,Business,2015,4
+23,The Art of Branding Systems,K. Hassan,Design,2024,5
+24,Beyond Health Informatics,B. McCarthy,Health,2020,3
+25,Foundations of Colour Theory,S. Anderson,Design,2025,4
+26,Beyond Web Development,C. Morales,Technology,2011,3
+27,Finance: Theory and Practice,V. Rossi,Business,2024,4
+28,Advanced Public Health,U. Erdogan,Health,2019,1
+29,Beyond Organisational Behaviour,L. Nguyen,Business,2022,4
+30,Design History Research Methods,R. Patel,Design,2024,5
+31,Beyond Interaction Design,G. Martin,Design,2025,5
+32,Foundations of Public Health,A. Lopez,Health,2013,3
+33,Nursing Practice: Concepts and Cases,L. Becker,Health,2015,1
+34,Service Design: A Modern Approach,A. Lopez,Design,2024,5
+35,Motion Graphics: Theory and Practice,N. Dubois,Design,2021,3
+36,Applied Cybersecurity,J. Okafor,Technology,2020,5
+37,Advanced Branding,W. Zhao,Business,2012,3
+38,The Paediatrics Handbook,Q. Rahman,Health,2019,3
+39,Data Engineering Fundamentals,C. Schneider,Technology,2014,3
+40,Principles of Clinical Research,H. Tanaka,Health,2021,3
+41,Beyond Corporate Governance,Z. Abebe,Business,2014,5
+42,Typography: Concepts and Cases,V. Rossi,Design,2022,3
+43,Foundations of Supply Chain,T. Hoffmann,Business,2012,4
+44,Design Thinking: Theory and Practice,M. Chen,Design,2021,3
+45,Mastering Physiology,W. Zhao,Health,2025,2
+46,Anatomy: A Modern Approach,H. Tanaka,Health,2012,3
+47,The Negotiation Handbook,E. Novak,Business,2011,3
+48,Thinking in Data Structures,C. Schneider,Technology,2022,2
+49,Mastering User Experience,B. McCarthy,Design,2015,4
+50,Advanced Cybersecurity,U. Erdogan,Technology,2017,4
+51,Thinking in Visual Communication,A. Lopez,Design,2017,5
+52,Visual Communication: A Modern Approach,P. Antoniou,Design,2016,3
+53,Frontiers of Motion Graphics,A. Lopez,Design,2024,3
+54,Exploring Paediatrics,T. Hoffmann,Health,2023,2
+55,Branding Systems in Practice,C. Schneider,Design,2014,3
+56,Advanced Machine Learning,P. Antoniou,Technology,2021,5
+57,The Biomedical Ethics Handbook,T. Hoffmann,Health,2013,3
+58,Principles of Distributed Systems,N. Dubois,Technology,2018,4
+59,Data Structures: Theory and Practice,R. Singh,Technology,2012,2
+60,The Art of Project Management,X. Suzuki,Business,2010,4
+61,Advanced Industrial Design,L. Becker,Design,2021,2
+62,Exploring Algorithms,U. Erdogan,Technology,2017,1
+63,Quantum Computing and Society,K. O'Connor,Technology,2020,2
+64,Foundations of Marketing,F. Khan,Business,2025,2
+65,Economics: Concepts and Cases,A. Lopez,Business,2010,1
+66,Introduction to Visual Communication,O. Olsson,Design,2014,5
+67,Operations Fundamentals,T. Hoffmann,Business,2023,1
+68,Applied Physiology,V. Rossi,Health,2013,1
+69,Epidemiology: A Modern Approach,B. McCarthy,Health,2024,1
+70,The Organisational Behaviour Handbook,N. Iqbal,Business,2010,5
+71,Databases Research Methods,H. Tanaka,Technology,2019,4
+72,Introduction to Operations,X. Suzuki,Business,2017,5
+73,Essential User Experience,L. Nguyen,Design,2021,1
+74,Paediatrics: Theory and Practice,L. Becker,Health,2010,4
+75,Contemporary Marketing,Q. Rahman,Business,2021,3
+76,Understanding Distributed Systems,S. Anderson,Technology,2021,2
+77,Supply Chain Fundamentals,K. O'Connor,Business,2020,2
+78,Advanced Entrepreneurship,E. Novak,Business,2020,2
+79,Frontiers of Mental Health,P. Antoniou,Health,2015,2
+80,Principles of Computer Graphics,M. Johansson,Technology,2011,3
+81,Software Engineering in Practice,I. Volkov,Technology,2011,3
+82,Applied Operating Systems,Z. Abebe,Technology,2025,3
+83,Advanced Branding Systems,I. Volkov,Design,2019,3
+84,Advanced Rehabilitation,W. Zhao,Health,2018,1
+85,Understanding Cybersecurity,Z. Abebe,Technology,2024,4
+86,Data Structures and Society,N. Iqbal,Technology,2025,3
+87,Web Development: Theory and Practice,L. Nguyen,Technology,2023,1
+88,Essential Artificial Intelligence,D. Williams,Technology,2019,3
+89,The Typography Handbook,G. Martin,Design,2019,3
+90,The Art of Artificial Intelligence,R. Singh,Technology,2015,4
+91,Understanding Mental Health,R. Patel,Health,2021,5
+92,Essential Nutrition,A. Garcia,Health,2012,4
+93,Understanding Paediatrics,N. Dubois,Health,2010,2
+94,Thinking in Illustration,A. Lopez,Design,2011,2
+95,Principles of Interaction Design,U. Erdogan,Design,2021,4
+96,Graphic Design Research Methods,C. Schneider,Design,2014,4
+97,Understanding Pharmacology,A. Lopez,Health,2012,5
+98,Foundations of Negotiation,U. Erdogan,Business,2022,3
+99,Algorithms: A Modern Approach,M. Chen,Technology,2015,4
+100,Industrial Design: Theory and Practice,S. Andersson,Design,2013,3
+101,Computer Graphics for Professionals,A. Lopez,Technology,2016,5
+102,Applied Biomedical Ethics,N. Iqbal,Health,2016,1
+103,Foundations of Organisational Behaviour,S. Anderson,Business,2024,2
+104,Mental Health: Concepts and Cases,L. Nguyen,Health,2020,3
+105,The Science of Design History,F. Khan,Design,2019,2
+106,Corporate Governance: Concepts and Cases,D. Williams,Business,2021,5
+107,Typography: A Modern Approach,I. Volkov,Design,2014,2
+108,Understanding Negotiation,K. Hassan,Business,2021,4
+109,The Science of Accounting,B. McCarthy,Business,2012,1
+110,Applied Leadership,P. Antoniou,Business,2023,4
+111,Finance Research Methods,P. Silva,Business,2020,1
+112,The Art of Networks,T. Hoffmann,Technology,2021,2
+113,The Science of Supply Chain,D. Roy,Business,2015,2
+114,Essential Paediatrics,A. Garcia,Health,2013,5
+115,Foundations of Strategy,N. Dubois,Business,2015,3
+116,Databases: Concepts and Cases,X. Suzuki,Technology,2019,1
+117,Physiology for Professionals,S. Andersson,Health,2018,2
+118,Thinking in Operating Systems,L. Nguyen,Technology,2015,5
+119,Data Structures Research Methods,N. Dubois,Technology,2020,5
+120,Advanced Organisational Behaviour,M. Chen,Business,2012,1
+121,Beyond Branding Systems,K. Hassan,Design,2018,2
+122,Cybersecurity Research Methods,B. McCarthy,Technology,2010,4
+123,Beyond Operating Systems,F. Khan,Technology,2019,4
+124,Branding: A Modern Approach,Z. Abebe,Business,2019,4
+125,Principles of Service Design,A. Garcia,Design,2015,4
+126,Essential Economics,M. Johansson,Business,2016,3
+127,Thinking in Accounting,G. Martin,Business,2020,3
+128,Exploring Anatomy,U. Erdogan,Health,2013,3
+129,Networks: A Modern Approach,T. Kowalski,Technology,2018,4
+130,The Public Health Handbook,F. Khan,Health,2022,5
+131,Essential Physiology,N. Dubois,Health,2020,5
+132,Design Thinking Fundamentals,I. Volkov,Design,2015,4
+133,Networks: Theory and Practice,N. Iqbal,Technology,2019,4
+134,Introduction to Finance,Z. Abebe,Business,2024,2
+135,Artificial Intelligence in Practice,X. Suzuki,Technology,2011,1
+136,Applied Economics,C. Schneider,Business,2025,3
+137,The Science of Graphic Design,K. O'Connor,Design,2023,2
+138,Service Design for Professionals,U. Erdogan,Design,2022,3
+139,Advanced Motion Graphics,S. Andersson,Design,2016,3
+140,The Science of Web Development,S. Anderson,Technology,2022,5
+141,The Art of Distributed Systems,S. Andersson,Technology,2018,5
+142,Frontiers of Clinical Research,T. Kowalski,Health,2014,1
+143,Exploring Design Thinking,W. Zhao,Design,2021,2
+144,Motion Graphics in Practice,L. Becker,Design,2022,5
+145,Advanced Software Engineering,R. Patel,Technology,2014,3
+146,Contemporary Design History,M. Johansson,Design,2014,5
+147,User Experience: Theory and Practice,G. Martin,Design,2020,2
+148,Exploring Operations,V. Rossi,Business,2020,5
+149,Negotiation: Theory and Practice,N. Iqbal,Business,2019,4
+150,Introduction to Cloud Computing,W. Zhao,Technology,2013,4
+151,Nutrition Research Methods,M. Chen,Health,2025,3
+152,Beyond Distributed Systems,D. Roy,Technology,2017,1
+153,Networks Research Methods,N. Dubois,Technology,2022,2
+154,Frontiers of Databases,R. Patel,Technology,2013,2
+155,Introduction to Colour Theory,G. Martin,Design,2023,2
+156,Essential Corporate Governance,O. Olsson,Business,2023,5
+157,Thinking in Project Management,P. Antoniou,Business,2011,2
+158,Management: Theory and Practice,S. Andersson,Business,2020,4
+159,Epidemiology: Theory and Practice,G. Martin,Health,2015,4
+160,The Science of Pharmacology,E. Novak,Health,2021,3
+161,Thinking in Colour Theory,I. Volkov,Design,2017,3
+162,The Science of Visual Communication,E. Cohen,Design,2019,3
+163,Physiology: Concepts and Cases,N. Iqbal,Health,2020,4
+164,Strategy Fundamentals,F. Khan,Business,2013,5
+165,Frontiers of Operating Systems,Q. Rahman,Technology,2022,3
+166,Foundations of Visual Communication,R. Patel,Design,2019,1
+167,Understanding Global Health,A. Lopez,Health,2018,4
+168,Management in Practice,E. Novak,Business,2018,5
+169,Nutrition: Concepts and Cases,P. Silva,Health,2013,5
+170,Management: A Modern Approach,A. Garcia,Business,2017,2
+171,Advanced Algorithms,J. Okafor,Technology,2020,4
+172,The Supply Chain Handbook,P. Silva,Business,2010,5
+173,Mastering Leadership,P. Antoniou,Business,2025,2
+174,Applied Entrepreneurship,F. Khan,Business,2011,1
+175,Beyond Operations,E. Cohen,Business,2011,2
+176,Essential Project Management,D. Williams,Business,2011,4
+177,Contemporary User Experience,F. Khan,Design,2011,1
+178,Applied Motion Graphics,C. Schneider,Design,2013,3
+179,Applied Colour Theory,E. Novak,Design,2025,2
+180,Economics: Theory and Practice,C. Morales,Business,2016,1
+181,Accounting and Society,M. Johansson,Business,2018,2
+182,Introduction to Service Design,W. Zhao,Design,2019,5
+183,Frontiers of Gerontology,I. Volkov,Health,2015,5
+184,Beyond Global Health,Z. Abebe,Health,2023,5
+185,Algorithms and Society,Z. Abebe,Technology,2013,2
+186,Foundations of Networks,G. Martin,Technology,2017,1
+187,Industrial Design for Professionals,Y. Park,Design,2024,3
+188,Visual Communication and Society,D. Roy,Design,2010,3
+189,Beyond Design Thinking,Y. Park,Design,2011,1
+190,The Art of Strategy,N. Dubois,Business,2022,5
+191,Branding: Concepts and Cases,V. Rossi,Business,2013,3
+192,Understanding Clinical Research,E. Cohen,Health,2017,2
+193,Contemporary Data Structures,M. Johansson,Technology,2021,4
+194,Design History: Concepts and Cases,P. Antoniou,Design,2016,2
+195,Frontiers of Distributed Systems,C. Schneider,Technology,2012,5
+196,The Art of Design History,U. Erdogan,Design,2012,5
+197,The Marketing Handbook,S. Andersson,Business,2016,5
+198,The Science of Anatomy,N. Dubois,Health,2020,5
+199,The Art of Finance,O. Olsson,Business,2025,1
+200,Advanced Networks,P. Silva,Technology,2023,4
+201,The Science of Colour Theory,V. Rossi,Design,2010,4
+202,Rehabilitation for Professionals,J. Smith,Health,2016,5
+203,Principles of Public Health,R. Singh,Health,2021,1
+204,The Science of Public Health,S. Anderson,Health,2025,1
+205,Mastering Branding,P. Silva,Business,2023,3
+206,Exploring Networks,Q. Rahman,Technology,2022,1
+207,Frontiers of Illustration,E. Novak,Design,2014,3
+208,The Anatomy Handbook,E. Novak,Health,2022,5
+209,Foundations of Biomedical Ethics,E. Cohen,Health,2010,1
+210,Frontiers of Service Design,E. Novak,Design,2023,5
+211,Exploring Organisational Behaviour,E. Cohen,Business,2017,4
+212,Understanding Anatomy,C. Morales,Health,2016,1
+213,Advanced Gerontology,J. Okafor,Health,2010,2
+214,Typography in Practice,K. O'Connor,Design,2011,4
+215,Thinking in Supply Chain,A. Garcia,Business,2017,1
+216,Exploring Colour Theory,E. Cohen,Design,2016,1
+217,Foundations of Design History,F. Khan,Design,2017,5
+218,Operations and Society,C. Schneider,Business,2020,2
+219,Applied 3D Modelling,H. Tanaka,Design,2017,4
+220,Applied Strategy,A. Garcia,Business,2015,4
+221,The Science of Economics,A. Garcia,Business,2021,4
+222,Entrepreneurship: Theory and Practice,J. Okafor,Business,2023,2
+223,Applied Epidemiology,D. Williams,Health,2025,2
+224,Strategy: A Modern Approach,H. Tanaka,Business,2024,1
+225,The Science of Industrial Design,J. Okafor,Design,2014,4
+226,Design Thinking in Practice,L. Nguyen,Design,2024,3
+227,Principles of Design History,I. Volkov,Design,2011,3
+228,Exploring Illustration,C. Schneider,Design,2011,1
+229,Service Design Research Methods,S. Andersson,Design,2016,4
+230,Data Engineering in Practice,W. Zhao,Technology,2019,1
+231,Quantum Computing in Practice,I. Volkov,Technology,2013,4
+232,Biomedical Ethics: A Modern Approach,C. Schneider,Health,2016,4
+233,Operating Systems: A Modern Approach,G. Martin,Technology,2019,4
+234,The Art of Operating Systems,X. Suzuki,Technology,2019,3
+235,Understanding Operating Systems,N. Iqbal,Technology,2024,1
+236,Mental Health Fundamentals,G. Martin,Health,2016,3
+237,Cybersecurity and Society,R. Patel,Technology,2017,2
+238,Introduction to Web Development,S. Andersson,Technology,2023,3
+239,Foundations of Databases,W. Zhao,Technology,2017,4
+240,Rehabilitation Research Methods,Y. Park,Health,2025,5
+241,Beyond Machine Learning,W. Zhao,Technology,2018,4
+242,Economics Fundamentals,M. Johansson,Business,2015,3
+243,Paediatrics Fundamentals,N. Iqbal,Health,2015,5
+244,Beyond Software Engineering,T. Hoffmann,Technology,2011,1
+245,Frontiers of Graphic Design,J. Smith,Design,2023,2
+246,Beyond Physiology,S. Anderson,Health,2014,1
+247,Negotiation in Practice,M. Johansson,Business,2021,1
+248,Frontiers of Project Management,B. McCarthy,Business,2025,4
+249,Introduction to Graphic Design,E. Novak,Design,2023,1
+250,Introduction to Operating Systems,C. Morales,Technology,2019,1
+251,Photography: Theory and Practice,R. Singh,Design,2015,1
+252,The Design History Handbook,H. Tanaka,Design,2017,2
+253,Data Engineering for Professionals,X. Suzuki,Technology,2018,4
+254,Principles of Pharmacology,Z. Abebe,Health,2024,5
+255,Nutrition: A Modern Approach,L. Nguyen,Health,2011,1
+256,Exploring Epidemiology,Q. Rahman,Health,2025,1
+257,Beyond Graphic Design,N. Dubois,Design,2012,4
+258,Essential Machine Learning,W. Zhao,Technology,2013,5
+259,Advanced Interaction Design,O. Olsson,Design,2025,3
+260,Advanced Project Management,S. Anderson,Business,2018,5
+261,Illustration Research Methods,R. Patel,Design,2015,3
+262,Introduction to Interaction Design,D. Roy,Design,2014,4
+263,Principles of Strategy,N. Dubois,Business,2017,5
+264,The Science of Design Thinking,Q. Rahman,Design,2014,1
+265,Biomedical Ethics: Theory and Practice,X. Suzuki,Health,2011,1
+266,Thinking in Gerontology,B. McCarthy,Health,2022,3
+267,Introduction to Machine Learning,C. Morales,Technology,2024,4
+268,Pharmacology: A Modern Approach,S. Andersson,Health,2022,4
+269,Mastering Machine Learning,D. Roy,Technology,2022,1
+270,Thinking in Strategy,Y. Park,Business,2012,1
+271,Accounting for Professionals,Q. Rahman,Business,2014,4
+272,Pharmacology and Society,K. O'Connor,Health,2012,1
+273,Applied Mental Health,U. Erdogan,Health,2018,1
+274,Foundations of Nursing Practice,D. Williams,Health,2023,4
+275,The Science of Operating Systems,L. Becker,Technology,2023,1
+276,Introduction to Nursing Practice,X. Suzuki,Health,2012,5
+277,Rehabilitation and Society,Q. Rahman,Health,2010,3
+278,Essential Epidemiology,L. Nguyen,Health,2017,5
+279,Anatomy: Theory and Practice,Q. Rahman,Health,2015,2
+280,Strategy for Professionals,C. Morales,Business,2025,2
+281,Principles of Data Structures,R. Singh,Technology,2018,4
+282,Health Informatics Fundamentals,N. Iqbal,Health,2016,4
+283,The Data Structures Handbook,V. Rossi,Technology,2010,4
+284,Photography and Society,B. McCarthy,Design,2022,3
+285,The Art of Cloud Computing,R. Singh,Technology,2014,3
+286,Artificial Intelligence and Society,I. Volkov,Technology,2025,3
+287,Mastering Epidemiology,G. Martin,Health,2019,4
+288,Branding Research Methods,Y. Park,Business,2020,4
+289,Exploring Pharmacology,T. Kowalski,Health,2016,5
+290,Frontiers of Branding,S. Andersson,Business,2010,4
+291,The Art of Gerontology,F. Khan,Health,2012,4
+292,Foundations of Health Informatics,V. Rossi,Health,2017,3
+293,Frontiers of Accounting,R. Singh,Business,2022,1
+294,The Art of Clinical Research,P. Antoniou,Health,2022,5
+295,Quantum Computing: Theory and Practice,J. Okafor,Technology,2011,3
+296,3D Modelling: Concepts and Cases,E. Novak,Design,2012,1
+297,Supply Chain: A Modern Approach,X. Suzuki,Business,2015,5
+298,Advanced Clinical Research,Z. Abebe,Health,2020,4
+299,The Nutrition Handbook,E. Cohen,Health,2017,4
+300,Frontiers of Artificial Intelligence,L. Becker,Technology,2014,3
