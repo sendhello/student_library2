@@ -28,11 +28,25 @@ class Validator:
         """Validates phone number (digits only, 7–15 chars)."""
         return phone.isdigit() and 7 <= len(phone) <= 15
 
-    @staticmethod
+   @staticmethod
     def validate_date(date_str: str) -> bool:
         """Validates date format (YYYY-MM-DD)."""
         try:
             datetime.strptime(date_str, "%Y-%m-%d")
             return True
         except ValueError:
+            return False
+
+    @staticmethod
+    def validate_faculty(faculty: str) -> bool:
+        """Validates faculty: must be non-empty and at most 100 characters."""
+        return bool(faculty and faculty.strip()) and len(faculty.strip()) <= 100
+
+    @staticmethod
+    def validate_year_level(year_level) -> bool:
+        """Validates year level: integer from 1 to 4."""
+        try:
+            value = int(year_level)
+            return 1 <= value <= 4
+        except (ValueError, TypeError):
             return False
