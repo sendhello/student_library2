@@ -131,3 +131,4 @@ dmypy.json
 
 # A3 runtime state (data.json is regenerated from CSV via startup menu)
 data.json
+.DS_Store
