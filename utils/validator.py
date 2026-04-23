@@ -28,7 +28,7 @@ class Validator:
         """Validates phone number (digits only, 7–15 chars)."""
         return phone.isdigit() and 7 <= len(phone) <= 15
 
-   @staticmethod
+    @staticmethod
     def validate_date(date_str: str) -> bool:
         """Validates date format (YYYY-MM-DD)."""
         try:
