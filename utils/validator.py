@@ -50,3 +50,17 @@ class Validator:
             return 1 <= value <= 4
         except (ValueError, TypeError):
             return False
+
+    @staticmethod
+    def validate_isbn(value: str) -> bool:
+        """Valida el formato de un ISBN.
+        Args:
+            value: El valor del ISBN a validar.
+        Returns:
+            bool: True si el formato es válido, False en caso contrario.
+        """
+        # Patrones para validar el formato del ISBN
+        pattern_with_dash = r'^978-\d{10}$'
+        pattern_without_dash = r'^978\d{10}$'
+        # Verificar si el valor coincide con alguno de los patrones
+        return bool(re.fullmatch(pattern_with_dash, value)) or bool(re.fullmatch(pattern_without_dash, value))
