@@ -3,6 +3,7 @@ from library import DataLoader, DataLoadError
 import os
 import tempfile
 
+
 def test_load_students():
     loader = DataLoader()
     # Crear un archivo CSV temporal para la prueba
