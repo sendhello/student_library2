@@ -2,7 +2,6 @@
 # library.py (Clase Library enriquecida)
 
 
-
 ##--------------------------------------------------------------------------------
 ## -------------- PART 2 ---------------------------------------------------
 ## Implement class Library — item & borrowing management (library.py, part 2)
