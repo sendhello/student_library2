@@ -2,6 +2,7 @@ import pytest
 from library import Library, NotFoundError, BorrowingError
 from datetime import date
 
+
 def test_add_member(empty_library):
     member = empty_library.add_member("Nate Bustamante", "nate@example.com", "1234567890", "2000-01-01", "Engineering", 3)
     assert len(empty_library.members) == 1
