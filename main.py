@@ -1,7 +1,46 @@
+"""A3 entry point: startup menu, member/item flows, transactions, reports."""
+from exceptions import DataLoadError, LibraryError, PersistenceError
 from library import Library
-from utils.validator import Validator
 from utils.display import Display
+from utils.validator import Validator
 
+
+# ---------------------------------------------------------------------------
+# Shared prompt helpers
+# ---------------------------------------------------------------------------
+
+def _prompt_faculty(label: str = "Choose a faculty") -> str:
+    """Prompts the user to pick one of `Validator.FACULTIES` by index."""
+    options = list(Validator.FACULTIES)
+    while True:
+        Display.print_menu(label, options)
+        choice = input("Choose an option: ").strip()
+        if choice.isdigit():
+            idx = int(choice)
+            if 1 <= idx <= len(options):
+                return options[idx - 1]
+        Display.print_error(f"Invalid choice. Pick 1..{len(options)}.")
+
+
+def _prompt_int(prompt: str, *, min_value: int, max_value: int | None = None) -> int:
+    """Prompts for an integer in [min_value, max_value]; re-prompts on bad input."""
+    while True:
+        raw = input(prompt).strip()
+        try:
+            value = int(raw)
+        except ValueError:
+            Display.print_error("Please enter a whole number.")
+            continue
+        if value < min_value or (max_value is not None and value > max_value):
+            limit = f"{min_value}..{max_value}" if max_value is not None else f"≥ {min_value}"
+            Display.print_error(f"Out of range. Expected {limit}.")
+            continue
+        return value
+
+
+# ---------------------------------------------------------------------------
+# Items menu
+# ---------------------------------------------------------------------------
 
 def items_menu_flow(library: Library) -> None:
     """Top-level Items menu: add or view items."""
@@ -22,7 +61,14 @@ def items_menu_flow(library: Library) -> None:
                 Display.print_error("Author cannot be empty.")
                 author = input("Enter the item's author: ")
 
-            item = library.add_item(title, author)
+            faculty = _prompt_faculty("Faculty for this item")
+            year = _prompt_int(
+                "Enter publication year (2000..2026): ",
+                min_value=2000, max_value=2026,
+            )
+            copies = _prompt_int("Enter number of copies (≥ 1): ", min_value=1)
+
+            item = library.add_item(title, author, faculty, year, copies)
             library.save_to_json()
             Display.print_success(
                 f"Item '{item.id}' with title '{item.title}' added successfully!"
@@ -44,14 +90,20 @@ def items_menu_flow(library: Library) -> None:
         input("<Press Enter to continue>")
 
 
+# ---------------------------------------------------------------------------
+# Members — sub-flows
+# ---------------------------------------------------------------------------
+
 def view_member_details(member) -> None:
     """Displays full personal details of a member."""
     Display.print_header(f"Details: {member.name}")
-    print(f"  ID:        {member.id}")
-    print(f"  Name:      {member.name}")
-    print(f"  Email:     {member.email}")
-    print(f"  Phone:     {member.phone}")
-    print(f"  Birthdate: {member.birthdate}")
+    print(f"  ID:         {member.id}")
+    print(f"  Name:       {member.name}")
+    print(f"  Email:      {member.email}")
+    print(f"  Phone:      {member.phone}")
+    print(f"  Birthdate:  {member.birthdate}")
+    print(f"  Faculty:    {member.faculty}")
+    print(f"  Year level: {member.year_level}")
 
 
 def view_member_borrowed_items(member, library: Library) -> None:
@@ -87,11 +139,9 @@ def borrow_item_flow(member, library: Library) -> None:
         Display.print_error("Invalid date format. Use YYYY-MM-DD.")
         due_date = input("Enter due date (YYYY-MM-DD): ")
 
-    if library.borrow_item(member.id, int(item_id_str), due_date):
-        library.save_to_json()
-        Display.print_success(f"Item borrowed successfully. Due: {due_date}")
-    else:
-        Display.print_error("Could not borrow item (not found or already borrowed).")
+    library.borrow_item(member.id, int(item_id_str), due_date)
+    library.save_to_json()
+    Display.print_success(f"Item borrowed successfully. Due: {due_date}")
 
 
 def return_item_flow(member, library: Library) -> None:
@@ -112,26 +162,26 @@ def return_item_flow(member, library: Library) -> None:
         Display.print_error("Invalid item ID.")
         return
 
-    if library.return_item(member.id, int(item_id_str)):
-        library.save_to_json()
-        Display.print_success("Item returned successfully.")
-    else:
-        Display.print_error("Could not return item (not found or not borrowed by this member).")
+    library.return_item(member.id, int(item_id_str))
+    library.save_to_json()
+    Display.print_success("Item returned successfully.")
 
 
 def view_items_by_due_date(member, library: Library) -> None:
-    """Shows a member's borrowed items grouped by due date."""
+    """Shows a member's borrowed items grouped by their due date."""
     borrowed_ids = member.get_borrowed_items()
     if not borrowed_ids:
         Display.print_error("This member has no borrowed items.")
         return
 
-    grouped: dict = {}
+    grouped: dict[str, list] = {}
     for iid in borrowed_ids:
         item = library.find_item(iid)
-        if item:
-            due = item.due_date or "No due date"
-            grouped.setdefault(due, []).append(item)
+        if not item:
+            continue
+        # A3: per-copy due dates live in Item.due_dates[member_id]
+        due = item.due_dates.get(member.id, "No due date")
+        grouped.setdefault(due, []).append(item)
 
     Display.print_header(f"Items by due date: {member.name}")
     Display.print_grouped_by_date(grouped)
@@ -206,7 +256,10 @@ def members_menu_flow(library: Library) -> None:
                 Display.print_error("Invalid birthdate. Use YYYY-MM-DD format.")
                 birthdate = input("Enter member birthdate (YYYY-MM-DD): ")
 
-            member = library.add_member(name, email, phone, birthdate)
+            faculty = _prompt_faculty("Faculty for this member")
+            year_level = _prompt_int("Enter year level (1..4): ", min_value=1, max_value=4)
+
+            member = library.add_member(name, email, phone, birthdate, faculty, year_level)
             library.save_to_json()
             Display.print_success(
                 f"Member '{member.id}' with name '{member.name}' added successfully!"
@@ -239,30 +292,87 @@ def members_menu_flow(library: Library) -> None:
 
 
 # ---------------------------------------------------------------------------
-# TASK-10 — Main entry point (Ivan Bazhenov)
+# Startup flow
+# ---------------------------------------------------------------------------
+
+def initial_setup(library: Library) -> None:
+    """Two-option setup: import the bundled CSVs, or start empty."""
+    while True:
+        Display.print_menu(
+            "Initial setup",
+            [
+                "Import data from CSV (students.csv + books.csv + borrow_history.csv)",
+                "Start with an empty library",
+            ],
+        )
+        choice = input("Choose an option: ").strip()
+
+        if choice == '1':
+            try:
+                library.import_from_csv(
+                    "data/students.csv",
+                    "data/books.csv",
+                    "data/borrow_history.csv",
+                )
+                library.save_to_json()
+                Display.print_success(
+                    f"Imported {len(library.members)} members, "
+                    f"{len(library.items)} items, "
+                    f"{len(library.transactions)} transactions."
+                )
+            except DataLoadError as e:
+                Display.print_error(f"Import failed: {e}")
+                Display.print_error("Falling back to an empty library.")
+            return
+        elif choice == '2':
+            return
+        else:
+            Display.print_error("Invalid choice. Please pick 1 or 2.")
+
+
+def bootstrap_library() -> Library:
+    """Loads `data.json` if available; otherwise runs the initial-setup menu."""
+    library = Library()
+    try:
+        loaded = library.load_from_json()
+    except PersistenceError as e:
+        Display.print_error(f"Could not read data.json: {e}")
+        loaded = False
+
+    if not loaded or library.is_empty():
+        initial_setup(library)
+
+    return library
+
+
+# ---------------------------------------------------------------------------
+# Main entry point
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    library = Library()
-    library.load_from_json()
-
     Display.print_header("Welcome to the Library Membership & Resource Management System")
+
+    library = bootstrap_library()
 
     try:
         while True:
-            Display.print_menu("Main Menu", ["Members", "Items"])
-            choice = input("Choose an option: ")
+            try:
+                Display.print_menu("Main Menu", ["Members", "Items"])
+                choice = input("Choose an option: ")
 
-            if choice == '1':
-                members_menu_flow(library)
-            elif choice == '2':
-                items_menu_flow(library)
-            elif choice == '0':
-                library.save_to_json()
-                Display.print_success("Goodbye! Data saved.")
-                break
-            else:
-                Display.print_error("Invalid choice. Please enter 1, 2, or 0.")
+                if choice == '1':
+                    members_menu_flow(library)
+                elif choice == '2':
+                    items_menu_flow(library)
+                elif choice == '0':
+                    library.save_to_json()
+                    Display.print_success("Goodbye! Data saved.")
+                    break
+                else:
+                    Display.print_error("Invalid choice. Please enter 1, 2, or 0.")
+                    input("<Press Enter to continue>")
+            except LibraryError as e:
+                Display.print_error(str(e))
                 input("<Press Enter to continue>")
 
     except KeyboardInterrupt:

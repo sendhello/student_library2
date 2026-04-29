@@ -7,6 +7,8 @@ import re
 class Validator:
     """Provides static validation methods."""
 
+    FACULTIES: tuple[str, ...] = ("Business", "Design", "Technology", "Health")
+
     @staticmethod
     def validate_name(name: str) -> bool:
         """Validates member name: non-empty, max 50 characters."""
@@ -37,30 +39,18 @@ class Validator:
         except ValueError:
             return False
 
-    @staticmethod
-    def validate_faculty(faculty: str) -> bool:
-        """Validates faculty: must be non-empty and at most 100 characters."""
-        return bool(faculty and faculty.strip()) and len(faculty.strip()) <= 100
+    @classmethod
+    def validate_faculty(cls, faculty: str) -> bool:
+        """Validates faculty against the whitelist of supported faculties."""
+        
+        return isinstance(faculty, str) and faculty.strip() in cls.FACULTIES
 
     @staticmethod
     def validate_year_level(year_level) -> bool:
         """Validates year level: integer from 1 to 4."""
+        
         try:
             value = int(year_level)
             return 1 <= value <= 4
         except (ValueError, TypeError):
             return False
-
-    @staticmethod
-    def validate_isbn(value: str) -> bool:
-        """Validates the format of an ISBN.
-        Args:
-        value: The ISBN value to validate.
-        Returns:
-        bool: True if the format is valid, False otherwise.
-        """
-        # Patterns for validating the ISBN format
-        pattern_with_dash = r'^978-\d{10}$'
-        pattern_without_dash = r'^978\d{10}$'
-        # Check if the value matches any of the patterns
-        return bool(re.fullmatch(pattern_with_dash, value)) or bool(re.fullmatch(pattern_without_dash, value))

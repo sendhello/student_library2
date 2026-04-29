@@ -156,8 +156,9 @@ class Library:
         self.members = [m for m in self.members if m.id != member_id]
         return True
 
-    def save_to_json(self, file_path: str) -> None:
-        """Save the library data to a JSON file."""
+    def save_to_json(self, file_path: str = "data.json") -> None:
+        """Save the library data to a JSON file (default: data.json in CWD)."""
+        
         data = {
             "members": [member.to_dict() for member in self.members],
             "items": [item.to_dict() for item in self.items],
@@ -169,8 +170,12 @@ class Library:
         except OSError as e:
             raise PersistenceError(f"Error saving to {file_path}: {e}")
 
-    def load_from_json(self, file_path: str) -> bool:
-        """Load the library data from a JSON file."""
+    def load_from_json(self, file_path: str = "data.json") -> bool:
+        """Load the library data from a JSON file (default: data.json in CWD).
+
+        Returns True if data was loaded and library is non-empty, False if the
+        file is missing or contained no entities.
+        """
         if not os.path.exists(file_path):
             return False
 

@@ -35,8 +35,16 @@ def test_validate_date():
 
 
 def test_validate_faculty():
-    assert Validator.validate_faculty("IT") is True
-    assert Validator.validate_faculty("Business") is True
+    # All 4 supported faculties pass
+    for f in Validator.FACULTIES:
+        assert Validator.validate_faculty(f) is True
+        
+    # Trimmed input still recognised
+    assert Validator.validate_faculty("  Business  ") is True
+    
+    # Anything outside the whitelist is rejected
+    assert Validator.validate_faculty("IT") is False
+    assert Validator.validate_faculty("business") is False  # case-sensitive
     assert Validator.validate_faculty("") is False
     assert Validator.validate_faculty("   ") is False
 
