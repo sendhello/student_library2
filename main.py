@@ -1,6 +1,7 @@
 """A3 entry point: startup menu, member/item flows, transactions, reports."""
 from exceptions import DataLoadError, LibraryError, PersistenceError
 from library import Library
+from reports import ReportService
 from utils.display import Display
 from utils.validator import Validator
 
@@ -392,6 +393,127 @@ def transactions_menu_flow(library: Library) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Reports menu
+# ---------------------------------------------------------------------------
+
+def _prompt_optional_faculty(label: str = "Filter by faculty") -> str | None:
+    """Numbered faculty picker with `Any` as the first option."""
+    
+    options = ["Any (no filter)", *Validator.FACULTIES]
+    while True:
+        Display.print_menu(label, options)
+        raw = input("Choose an option: ").strip()
+        if raw.isdigit():
+            idx = int(raw)
+            if idx == 1:
+                return None
+            if 2 <= idx <= len(options):
+                return options[idx - 1]
+        Display.print_error(f"Invalid choice. Pick 1..{len(options)}.")
+
+
+def _prompt_optional_year_level() -> int | None:
+    """Blank → None (any). Numeric → must satisfy `Validator.validate_year_level`."""
+    
+    while True:
+        raw = input("Filter by year level (1..4, blank = any): ").strip()
+        if raw == "":
+            return None
+        if Validator.validate_year_level(raw):
+            return int(raw)
+        Display.print_error("Invalid year level. Use 1..4, or leave blank for any.")
+
+
+def _prompt_top_n(default: int = 10) -> int:
+    """Blank → default. Numeric ≥ 1. Re-prompts on bad input."""
+    
+    while True:
+        raw = input(f"Top N (blank = {default}): ").strip()
+        if raw == "":
+            return default
+        try:
+            n = int(raw)
+        except ValueError:
+            Display.print_error("Please enter a whole number, or leave blank for default.")
+            continue
+        if n < 1:
+            Display.print_error("Top N must be at least 1.")
+            continue
+        return n
+
+
+def _render_dataframe_report(df, title: str) -> None:
+    """Adapter from pandas DataFrame to `Display.print_report_table`."""
+    
+    Display.print_report_table(df.to_dict("records"), df.columns.tolist(), title)
+
+
+def reports_menu_flow(library: Library) -> None:
+    """Top-level Reports menu wired to ReportService."""
+    
+    svc = ReportService(library)
+    while True:
+        Display.print_menu(
+            "Reports Menu",
+            [
+                "Catalog by faculty",
+                "Most popular books",
+                "Most active students",
+                "Overdue loans",
+                "Monthly loan activity",
+            ],
+        )
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            year_from = _prompt_optional_int("Year from (blank = any): ")
+            year_to = _prompt_optional_int("Year to (blank = any): ")
+            df = svc.catalog_by_faculty(year_from=year_from, year_to=year_to)
+            _render_dataframe_report(df, "Catalog by faculty")
+            
+        elif choice == '2':
+            faculty = _prompt_optional_faculty("Faculty filter")
+            date_from = _prompt_optional_date("Borrow date from (YYYY-MM-DD, blank = any): ")
+            date_to = _prompt_optional_date("Borrow date to (YYYY-MM-DD, blank = any): ")
+            top_n = _prompt_top_n()
+            df = svc.most_popular_books(
+                faculty=faculty, date_from=date_from, date_to=date_to, top_n=top_n,
+            )
+            _render_dataframe_report(df, "Most popular books")
+            
+        elif choice == '3':
+            faculty = _prompt_optional_faculty("Faculty filter")
+            year_level = _prompt_optional_year_level()
+            top_n = _prompt_top_n()
+            df = svc.most_active_students(
+                faculty=faculty, year_level=year_level, top_n=top_n,
+            )
+            _render_dataframe_report(df, "Most active students")
+            
+        elif choice == '4':
+            faculty = _prompt_optional_faculty("Faculty filter")
+            df = svc.overdue_loans(faculty=faculty)
+            _render_dataframe_report(df, "Overdue loans")
+            
+        elif choice == '5':
+            faculty = _prompt_optional_faculty("Faculty filter")
+            date_from = _prompt_optional_date("Borrow date from (YYYY-MM-DD, blank = any): ")
+            date_to = _prompt_optional_date("Borrow date to (YYYY-MM-DD, blank = any): ")
+            data = svc.monthly_activity(
+                faculty=faculty, date_from=date_from, date_to=date_to,
+            )
+            Display.print_bar_chart(data, "Monthly loan activity")
+            
+        elif choice == '0':
+            break
+        
+        else:
+            Display.print_error("Invalid choice. Please try again.")
+
+        input("<Press Enter to continue>")
+
+
+# ---------------------------------------------------------------------------
 # Startup flow
 # ---------------------------------------------------------------------------
 
@@ -457,7 +579,9 @@ if __name__ == "__main__":
     try:
         while True:
             try:
-                Display.print_menu("Main Menu", ["Members", "Items", "Transactions"])
+                Display.print_menu(
+                    "Main Menu", ["Members", "Items", "Transactions", "Reports"]
+                )
                 choice = input("Choose an option: ")
 
                 if choice == '1':
@@ -466,12 +590,14 @@ if __name__ == "__main__":
                     items_menu_flow(library)
                 elif choice == '3':
                     transactions_menu_flow(library)
+                elif choice == '4':
+                    reports_menu_flow(library)
                 elif choice == '0':
                     library.save_to_json()
                     Display.print_success("Goodbye! Data saved.")
                     break
                 else:
-                    Display.print_error("Invalid choice. Please enter 1, 2, 3, or 0.")
+                    Display.print_error("Invalid choice. Please enter 1, 2, 3, 4, or 0.")
                     input("<Press Enter to continue>")
             except LibraryError as e:
                 Display.print_error(str(e))
