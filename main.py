@@ -5,12 +5,10 @@ from utils.display import Display
 from utils.validator import Validator
 
 
-# ---------------------------------------------------------------------------
-# Shared prompt helpers
-# ---------------------------------------------------------------------------
 
 def _prompt_faculty(label: str = "Choose a faculty") -> str:
     """Prompts the user to pick one of `Validator.FACULTIES` by index."""
+    
     options = list(Validator.FACULTIES)
     while True:
         Display.print_menu(label, options)
@@ -24,6 +22,7 @@ def _prompt_faculty(label: str = "Choose a faculty") -> str:
 
 def _prompt_int(prompt: str, *, min_value: int, max_value: int | None = None) -> int:
     """Prompts for an integer in [min_value, max_value]; re-prompts on bad input."""
+    
     while True:
         raw = input(prompt).strip()
         try:
@@ -229,6 +228,7 @@ def member_sub_menu(member, library: Library) -> None:
 
 def members_menu_flow(library: Library) -> None:
     """Top-level Members menu: add, view all, or drill into a member."""
+    
     while True:
         Display.print_menu("Members Menu", ["Add a new member", "View all members"])
         choice = input("Choose an option: ")
@@ -283,6 +283,106 @@ def members_menu_flow(library: Library) -> None:
                     else:
                         Display.print_error("Invalid input. Enter a numeric member ID.")
 
+        elif choice == '0':
+            break
+        else:
+            Display.print_error("Invalid choice. Please try again.")
+
+        input("<Press Enter to continue>")
+
+
+# ---------------------------------------------------------------------------
+# Transactions menu
+# ---------------------------------------------------------------------------
+
+def _prompt_optional_int(prompt: str) -> int | None:
+    """Prompts for an int. Empty input → None. Re-prompts on bad input."""
+    
+    while True:
+        raw = input(prompt).strip()
+        if raw == "":
+            return None
+        try:
+            return int(raw)
+        except ValueError:
+            Display.print_error("Please enter a whole number, or leave blank for any.")
+
+
+def _prompt_optional_date(prompt: str) -> str | None:
+    """Prompts for a YYYY-MM-DD date. Empty input → None. Re-prompts on bad input."""
+    
+    while True:
+        raw = input(prompt).strip()
+        if raw == "":
+            return None
+        if Validator.validate_date(raw):
+            return raw
+        Display.print_error("Invalid date. Use YYYY-MM-DD, or leave blank for any.")
+
+
+def _prompt_status() -> str | None:
+    """Maps numeric status choice (1..4) to filter_transactions status string."""
+    
+    options = ["Any", "Active", "Returned", "Overdue"]
+    mapping = [None, "active", "returned", "overdue"]
+    while True:
+        Display.print_menu("Status", options)
+        raw = input("Choose an option: ").strip()
+        if raw.isdigit() and 1 <= int(raw) <= len(options):
+            return mapping[int(raw) - 1]
+        Display.print_error(f"Invalid choice. Pick 1..{len(options)}.")
+
+
+def _filter_transactions_subflow(library: Library) -> None:
+    """Prompts for each filter (blank = any) and renders the matched transactions."""
+    
+    print("Leave any field blank to ignore that filter.")
+    member_id = _prompt_optional_int("Filter by member ID: ")
+    item_id = _prompt_optional_int("Filter by item ID: ")
+    date_from = _prompt_optional_date("Borrow date from (YYYY-MM-DD): ")
+    date_to = _prompt_optional_date("Borrow date to (YYYY-MM-DD): ")
+    status = _prompt_status()
+
+    txns = library.filter_transactions(
+        member_id=member_id,
+        item_id=item_id,
+        date_from=date_from,
+        date_to=date_to,
+        status=status,
+    )
+    Display.print_header(f"Filtered transactions ({len(txns)})")
+    Display.print_transactions_table(txns, library)
+
+
+def transactions_menu_flow(library: Library) -> None:
+    """Top-level Transactions menu: view / filter / active / overdue."""
+    
+    while True:
+        Display.print_menu(
+            "Transactions Menu",
+            [
+                "View all transactions",
+                "Filter transactions",
+                "View active loans only",
+                "View overdue loans",
+            ],
+        )
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            txns = library.get_all_transactions()
+            Display.print_header(f"All transactions ({len(txns)})")
+            Display.print_transactions_table(txns, library)
+        elif choice == '2':
+            _filter_transactions_subflow(library)
+        elif choice == '3':
+            txns = library.filter_transactions(status="active")
+            Display.print_header(f"Active loans ({len(txns)})")
+            Display.print_transactions_table(txns, library)
+        elif choice == '4':
+            txns = library.filter_transactions(status="overdue")
+            Display.print_header(f"Overdue loans ({len(txns)})")
+            Display.print_transactions_table(txns, library)
         elif choice == '0':
             break
         else:
@@ -357,19 +457,21 @@ if __name__ == "__main__":
     try:
         while True:
             try:
-                Display.print_menu("Main Menu", ["Members", "Items"])
+                Display.print_menu("Main Menu", ["Members", "Items", "Transactions"])
                 choice = input("Choose an option: ")
 
                 if choice == '1':
                     members_menu_flow(library)
                 elif choice == '2':
                     items_menu_flow(library)
+                elif choice == '3':
+                    transactions_menu_flow(library)
                 elif choice == '0':
                     library.save_to_json()
                     Display.print_success("Goodbye! Data saved.")
                     break
                 else:
-                    Display.print_error("Invalid choice. Please enter 1, 2, or 0.")
+                    Display.print_error("Invalid choice. Please enter 1, 2, 3, or 0.")
                     input("<Press Enter to continue>")
             except LibraryError as e:
                 Display.print_error(str(e))
