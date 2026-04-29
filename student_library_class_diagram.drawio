@@ -1,0 +1,210 @@
+<mxfile host="Electron" agent="claude-code">
+  <diagram id="a3-class-diagram" name="Student Library — A3">
+    <mxGraphModel dx="2249" dy="801" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="be" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=3" value="BaseEntity (ABC)&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="240" x="700" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="be1" parent="be" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest" value="+ id: int" vertex="1">
+          <mxGeometry height="20" width="240" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="be2" parent="be" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest" value="" vertex="1">
+          <mxGeometry height="8" width="240" y="22" as="geometry" />
+        </mxCell>
+        <mxCell id="be3" parent="be" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest" value="+ to_dict(): dict  «abstract»" vertex="1">
+          <mxGeometry height="20" width="240" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="be4" parent="be" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest" value="+ from_dict(d): BaseEntity  «abstract»" vertex="1">
+          <mxGeometry height="20" width="240" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mb" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" value="Member&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="220" width="280" x="160" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="mb1" parent="mb" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest" value="+ name: str&#xa;+ email: str&#xa;+ phone: str&#xa;+ birthdate: str&#xa;+ faculty: str&#xa;+ year_level: int&#xa;+ borrowed_items: list[int]" vertex="1">
+          <mxGeometry height="100" width="280" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="mb2" parent="mb" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="mb3" parent="mb" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ borrow_item(item_id): bool&#xa;+ return_item(item_id): bool&#xa;+ get_borrowed_items(): list&#xa;+ to_dict() / from_dict()" vertex="1">
+          <mxGeometry height="80" width="280" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="it" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" value="Item&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="240" width="280" x="680" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="it1" parent="it" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ title: str&#xa;+ author: str&#xa;+ faculty: str&#xa;+ year: int&#xa;+ copies: int&#xa;+ borrowed_by: list[int]&#xa;+ due_dates: dict[int, str]" vertex="1">
+          <mxGeometry height="100" width="280" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="it2" parent="it" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="22" as="geometry" />
+        </mxCell>
+        <mxCell id="it3" parent="it" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ is_available(): bool&#xa;+ available_copies(): int&#xa;+ borrow(member_id, due_date): bool&#xa;+ return_item(member_id): bool&#xa;+ to_dict() / from_dict()" vertex="1">
+          <mxGeometry height="100" width="280" y="138" as="geometry" />
+        </mxCell>
+        <mxCell id="tx" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1" value="Transaction&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="280" x="1200" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="tx2" parent="tx" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="tx3" parent="tx" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ is_active(): bool&#xa;+ is_overdue(today): bool&#xa;+ to_dict() / from_dict()" vertex="1">
+          <mxGeometry height="80" width="280" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="tx1" parent="tx" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ member_id: int&#xa;+ item_id: int&#xa;+ borrow_date: str&#xa;+ due_date: str&#xa;+ return_date: str | None" vertex="1">
+          <mxGeometry height="80" width="280" y="28" as="geometry" />
+        </mxCell>
+        <mxCell id="lb" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1" value="Library&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="280" width="280" x="680" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="lb1" parent="lb" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ members: list[Member]&#xa;+ items: list[Item]&#xa;+ transactions: list[Transaction]" vertex="1">
+          <mxGeometry height="60" width="280" y="38" as="geometry" />
+        </mxCell>
+        <mxCell id="lb2" parent="lb" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="lb3" parent="lb" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ add_member(...) / add_item(...)&#xa;+ borrow_item(member, item, due)&#xa;+ return_item(member, item)&#xa;+ remove_member(id)&#xa;+ filter_transactions(...)&#xa;+ save_to_json() / load_from_json()&#xa;+ import_from_csv(s, b, h)&#xa;+ is_empty(): bool" vertex="1">
+          <mxGeometry height="130" width="280" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="dl" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1" value="DataLoader&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="280" x="1210" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="dl1" parent="dl" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ EXPECTED_STUDENT_COLS&#xa;+ EXPECTED_BOOK_COLS&#xa;+ EXPECTED_HIST_COLS" vertex="1">
+          <mxGeometry height="60" width="280" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="dl2" parent="dl" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="26" as="geometry" />
+        </mxCell>
+        <mxCell id="dl3" parent="dl" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ load_students(path): list[Member]&#xa;+ load_books(path): list[Item]&#xa;+ load_history(path): list[Transaction]" vertex="1">
+          <mxGeometry height="100" width="280" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="rs" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1" value="ReportService&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="220" width="280" x="1210" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="rs1" parent="rs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ library: Library" vertex="1">
+          <mxGeometry height="20" width="280" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="rs2" parent="rs" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="rs3" parent="rs" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ catalog_by_faculty(...): DataFrame&#xa;+ most_popular_books(...): DataFrame&#xa;+ most_active_students(...): DataFrame&#xa;+ overdue_loans(...): DataFrame&#xa;+ monthly_activity(...): dict" vertex="1">
+          <mxGeometry height="90" width="280" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vd" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1" value="Validator (static)&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="280" x="160" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="vd2" parent="vd" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vd3" parent="vd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ validate_name(name)&#xa;+ validate_email(email)&#xa;+ validate_phone(phone)&#xa;+ validate_date(date_str)&#xa;+ validate_faculty(faculty)&#xa;+ validate_year_level(year)" vertex="1">
+          <mxGeometry height="100" width="280" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vd1" parent="vd" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ FACULTIES = (Business, Design,&#xa;    Technology, Health)" vertex="1">
+          <mxGeometry height="40" width="280" y="28" as="geometry" />
+        </mxCell>
+        <mxCell id="ds" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1" value="Display (static)&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="200" width="280" x="160" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="ds2" parent="ds" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[]" value="" vertex="1">
+          <mxGeometry height="8" width="280" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="ds3" parent="ds" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]]" value="+ print_header / print_menu&#xa;+ print_success / print_error&#xa;+ print_members_table&#xa;+ print_items_table&#xa;+ print_transactions_table&#xa;+ print_report_table&#xa;+ print_bar_chart" vertex="1">
+          <mxGeometry height="140" width="280" y="28" as="geometry" />
+        </mxCell>
+        <mxCell id="err" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=3" value="LibraryError" vertex="1">
+          <mxGeometry height="40" width="240" x="700" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="err1" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450" value="DataLoadError" vertex="1">
+          <mxGeometry height="40" width="180" x="380" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="err2" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450" value="PersistenceError" vertex="1">
+          <mxGeometry height="40" width="180" x="580" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="err3" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450" value="ValidationError" vertex="1">
+          <mxGeometry height="40" width="180" x="780" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="err4" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450" value="NotFoundError" vertex="1">
+          <mxGeometry height="40" width="180" x="980" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="err5" parent="1" style="shape=umlClass;align=center;html=1;rounded=0;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450" value="BorrowingError" vertex="1">
+          <mxGeometry height="40" width="180" x="1180" y="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="mb" style="endArrow=block;endFill=0;endSize=16;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="be">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" style="endArrow=block;endFill=0;endSize=16;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0" target="be">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="820" y="200" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="tx" style="endArrow=block;endFill=0;endSize=16;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="be">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="lb" style="endArrow=open;endFill=0;startArrow=diamondThin;startFill=1;startSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="mb">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11" value="1..*" vertex="1">
+          <mxGeometry height="20" width="40" x="350" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="lb" style="endArrow=open;endFill=0;startArrow=diamondThin;startFill=1;startSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0" target="it">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6l" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11" value="1..*" vertex="1">
+          <mxGeometry height="20" width="40" x="850" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="lb" style="endArrow=open;endFill=0;startArrow=diamondThin;startFill=1;startSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0" target="tx">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1340" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7l" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11" value="1..*" vertex="1">
+          <mxGeometry height="20" width="40" x="1310" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="mb1" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;exitX=0.998;exitY=0.799;entryX=0;entryY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" target="it" value="holds">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="lb" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5" target="dl" value="«uses»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="rs" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5" target="lb" value="«reads»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i1" edge="1" parent="1" source="err1" style="endArrow=block;endFill=0;endSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="err">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i2" edge="1" parent="1" source="err2" style="endArrow=block;endFill=0;endSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0" target="err">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i3" edge="1" parent="1" source="err3" style="endArrow=block;endFill=0;endSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0" target="err">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i4" edge="1" parent="1" source="err4" style="endArrow=block;endFill=0;endSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="err">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="980" y="1030" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i5" edge="1" parent="1" source="err5" style="endArrow=block;endFill=0;endSize=14;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" target="err">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1250" y="1030" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="1" source="lb" style="endArrow=open;endFill=0;html=1;edgeStyle=orthogonalEdgeStyle;rounded=0;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0" target="err" value="«raises»">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1" value="Student Library — A3 Class Diagram" vertex="1">
+          <mxGeometry height="40" width="520" x="160" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fillColor=#f5f5f5;strokeColor=#666666;rounded=1;spacingLeft=8;spacingTop=6" value="Legend&#xa;━━━▶  inheritance (open triangle)&#xa;◇━━▶  composition (filled diamond)&#xa;┄┄┄▶  dependency (dashed)" vertex="1">
+          <mxGeometry height="100" width="280" x="1200" y="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
