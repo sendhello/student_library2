@@ -1,31 +1,18 @@
-"""Library module for managing library items and members."""
-# library.py (Clase Library enriquecida)
-
-
-##--------------------------------------------------------------------------------
-## -------------- PART 2 ---------------------------------------------------
-## Implement class Library — item & borrowing management (library.py, part 2)
-
-
 import json
 import os
+from datetime import date
 
 from entities.transaction import Transaction
 from entities.member import Member
 from entities.item import Item
-from datetime import date
+from data_loader import DataLoader
+from exceptions import (
+    BorrowingError,
+    DataLoadError,
+    NotFoundError,
+    PersistenceError,
+)
 
-class NotFoundError(Exception):
-    """Raised when a member or item is not found."""
-    pass
-
-class BorrowingError(Exception):
-    """Raised when an item cannot be borrowed or returned."""
-    pass
-
-class PersistenceError(Exception):
-    """Raised when there is an error saving or loading data."""
-    pass
 
 class Library:
     def __init__(self):
@@ -234,12 +221,26 @@ class Library:
         return filtered
 
     def import_from_csv(self, students_path: str, books_path: str, history_path: str) -> None:
-        """Import data from CSV files using DataLoader."""
-        try:
-            # Asumimos que DataLoader es una clase que maneja la importación desde CSV
-            loader = DataLoader()
-            self.members = loader.load_students(students_path)
-            self.items = loader.load_books(books_path)
-            self.transactions = loader.load_history(history_path)
-        except Exception as e:
-            raise e  # Propagamos cualquier error de DataLoader
+        """Load 3 CSV files and propagate active loans into Member/Item state."""
+        
+        loader = DataLoader()
+        self.members = loader.load_students(students_path)
+        self.items = loader.load_books(books_path)
+        self.transactions = loader.load_history(history_path)
+
+        members_by_id = {m.id: m for m in self.members}
+        items_by_id = {i.id: i for i in self.items}
+        for txn in self.transactions:
+            if not txn.is_active():
+                continue
+            member = members_by_id.get(txn.member_id)
+            item = items_by_id.get(txn.item_id)
+            if member is None or item is None:
+                continue
+            # Defensive: guard against double-propagation and over-capacity
+            if not item.is_available() or txn.member_id in item.borrowed_by:
+                continue
+            item.borrowed_by.append(txn.member_id)
+            item.due_dates[txn.member_id] = txn.due_date
+            if txn.item_id not in member.borrowed_items:
+                member.borrowed_items.append(txn.item_id)

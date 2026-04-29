@@ -26,17 +26,23 @@ def test_borrow_happy_path(seeded_library):
     assert len(seeded_library.transactions) == 4
     assert transaction.is_active()
     assert 4 in seeded_library.find_member(4).get_borrowed_items()
-    assert seeded_library.find_item(4).borrowed_by == 4
+    assert 4 in seeded_library.find_item(4).borrowed_by
+    assert seeded_library.find_item(4).due_dates[4] == "2023-12-31"
 
 def test_borrow_unknown_member(empty_library):
     with pytest.raises(NotFoundError):
         empty_library.borrow_item(999, 1, "2023-12-31")
 
 def test_borrow_no_copies(seeded_library):
-    for _ in range(5):
-        seeded_library.borrow_item(4, 5, "2023-12-31")
+    # Exhaust all 5 copies of item 5 with 5 different members
+    for member_id in range(1, 6):
+        seeded_library.borrow_item(member_id, 5, "2023-12-31")
+    # A 6th borrower can't get a copy — supply is exhausted
+    sixth = seeded_library.add_member(
+        "Member 6", "m6@example.com", "666", "2000-01-06", "Engineering", 1,
+    )
     with pytest.raises(BorrowingError):
-        seeded_library.borrow_item(4, 5, "2023-12-31")
+        seeded_library.borrow_item(sixth.id, 5, "2023-12-31")
 
 def test_borrow_same_member_twice(seeded_library):
     with pytest.raises(BorrowingError):
@@ -46,7 +52,8 @@ def test_return_happy_path(seeded_library):
     transaction = seeded_library.return_item(1, 1)
     assert not transaction.is_active()
     assert 1 not in seeded_library.find_member(1).get_borrowed_items()
-    assert seeded_library.find_item(1).borrowed_by is None
+    assert 1 not in seeded_library.find_item(1).borrowed_by
+    assert 1 not in seeded_library.find_item(1).due_dates
 
 def test_return_no_active_loan(seeded_library):
     with pytest.raises(BorrowingError):
@@ -55,8 +62,13 @@ def test_return_no_active_loan(seeded_library):
 def test_remove_member_cascade(seeded_library):
     assert seeded_library.remove_member(1)
     assert len(seeded_library.members) == 4
-    assert all(txn.member_id != 1 for txn in seeded_library.transactions)
-    assert seeded_library.find_item(1).borrowed_by is None
+    # Member 1's transactions are not deleted, just closed (return_date set)
+    member_1_txns = [txn for txn in seeded_library.transactions if txn.member_id == 1]
+    assert member_1_txns, "expected member 1's transaction history to remain"
+    assert all(not txn.is_active() for txn in member_1_txns)
+    # Item 1's copy is freed back to the pool
+    assert 1 not in seeded_library.find_item(1).borrowed_by
+    assert 1 not in seeded_library.find_item(1).due_dates
 
 def test_save_and_load_json(empty_library, tmp_path):
     file_path = str(tmp_path / "data.json")
