@@ -75,8 +75,8 @@ class Display:
             print("No transactions to display.")
             return
 
-        print(f"| {'ID':6} | {'Member':20} | {'Item':30} | {'Borrowed':10} | {'Due':10} | {'Returned':10} | {'Status':10} |")
-        print("-" * 110)
+        print(f"| {'ID':6} | {'Member':20} | {'Item':45} | {'Borrowed':10} | {'Due':10} | {'Returned':10} | {'Status':10} |")
+        print("-" * 133)
 
         for txn in transactions:
             member = library.find_member(txn.member_id)
@@ -87,9 +87,9 @@ class Display:
 
             status = "active" if txn.is_active() else ("overdue" if txn.return_date and txn.return_date > txn.due_date else "returned")
 
-            print(f"| {txn.id:6} | {member_name:20} | {item_title:30} | {txn.borrow_date:10} | {txn.due_date:10} | {txn.return_date if txn.return_date else '':10} | {status:10} |")
+            print(f"| {txn.id:6} | {member_name:20} | {item_title:45} | {txn.borrow_date:10} | {txn.due_date:10} | {txn.return_date if txn.return_date else '':10} | {status:10} |")
 
-        print("-" * 110)
+        print("-" * 133)
 
     @staticmethod
     def print_report_table(rows: list[dict], columns: list[str], title: str) -> None:
