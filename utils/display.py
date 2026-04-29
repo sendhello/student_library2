@@ -4,6 +4,7 @@
 
 # utils/display.py
 
+
 class Display:
     """Static class for the console user interface."""
 
@@ -28,7 +29,6 @@ class Display:
         print(f"| {'Member ID':10} | {'Name':20} | {'Email':30} | {'Phone':15} | {'Birthdate':12} |")
         print("-" * 100)
         for m in members:
-            # Supports both Member objects (m.id) and dictionaries (m['id'])
             mid = m.id if hasattr(m, 'id') else m['id']
             name = m.name if hasattr(m, 'name') else m['name']
             email = m.email if hasattr(m, 'email') else m['email']
@@ -67,3 +67,74 @@ class Display:
     def print_error(msg: str) -> None:
         """Displays an error message."""
         print(f"\n!!! ERROR: {msg}")
+
+    @staticmethod
+    def print_transactions_table(transactions: list, library) -> None:
+        """Prints a table of transactions with 7 columns: ID | Member | Item | Borrowed | Due | Returned | Status."""
+        if not transactions:
+            print("No transactions to display.")
+            return
+
+        print(f"| {'ID':6} | {'Member':20} | {'Item':30} | {'Borrowed':10} | {'Due':10} | {'Returned':10} | {'Status':10} |")
+        print("-" * 110)
+
+        for txn in transactions:
+            member = library.find_member(txn.member_id)
+            item = library.find_item(txn.item_id)
+
+            member_name = member.name if member else "Unknown"
+            item_title = item.title if item else "Unknown"
+
+            status = "active" if txn.is_active() else ("overdue" if txn.return_date and txn.return_date > txn.due_date else "returned")
+
+            print(f"| {txn.id:6} | {member_name:20} | {item_title:30} | {txn.borrow_date:10} | {txn.due_date:10} | {txn.return_date if txn.return_date else '':10} | {status:10} |")
+
+        print("-" * 110)
+
+    @staticmethod
+    def print_report_table(rows: list[dict], columns: list[str], title: str) -> None:
+        """Prints a generic table from a list of dictionaries with variable columns."""
+        if not rows:
+            print(f"No {title.lower()} to display.")
+            return
+
+        Display.print_header(title)
+
+        # Calculate column widths
+        col_widths = {}
+        for col in columns:
+            col_widths[col] = max(6, min(40, len(col)))
+
+        for row in rows:
+            for col in columns:
+                if col in row:
+                    col_widths[col] = max(col_widths[col], min(40, len(str(row[col]))))
+
+        # Print header
+        header = " | ".join(f"{col:<{col_widths[col]}}" for col in columns)
+        print(header)
+        print("-" * len(header))
+
+        # Print rows
+        for row in rows:
+            row_str = " | ".join(f"{str(row.get(col, '')):<{col_widths[col]}}" for col in columns)
+            print(row_str)
+
+        print("-" * len(header))
+
+    @staticmethod
+    def print_bar_chart(data: dict, title: str, max_width: int = 40) -> None:
+        """Prints an ASCII bar chart with the given data."""
+        if not data:
+            print("No data to display.")
+            return
+
+        Display.print_header(title)
+
+        max_value = max(data.values())
+        scale = max_width / max_value if max_value != 0 else 1
+
+        for label, value in data.items():
+            bar_length = int(value * scale)
+            bar = '#' * bar_length
+            print(f"{label:10} | {bar:<{max_width}} {value}")

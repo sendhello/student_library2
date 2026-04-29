@@ -10,10 +10,10 @@
 import json
 import os
 
-from entities.item import Item
-from entities.member import Member
 from entities.transaction import Transaction
-from datetime import datetime
+from entities.member import Member
+from entities.item import Item
+from datetime import date
 
 class NotFoundError(Exception):
     """Raised when a member or item is not found."""
@@ -41,7 +41,7 @@ class Library:
     def add_member(self, name, email, phone, birthdate, faculty, year_level):
         member_id = self._next_member_id()
         member = Member(
-            id=member_id,
+            member_id=member_id,
             name=name,
             email=email,
             phone=phone,
@@ -55,7 +55,7 @@ class Library:
     def add_item(self, title, author, faculty, year, copies):
         item_id = self._next_item_id()
         item = Item(
-            id=item_id,
+            item_id=item_id,
             title=title,
             author=author,
             faculty=faculty,
@@ -90,7 +90,7 @@ class Library:
         return self.items
 
     def get_available_items(self):
-        return [item for item in self.items if item.available_copies > 0]
+        return [item for item in self.items if item.is_available()]
 
     def get_all_transactions(self):
         return self.transactions
@@ -115,9 +115,9 @@ class Library:
         member.borrow_item(item_id)
 
         txn_id = self._next_txn_id()
-        today = datetime.date.today().isoformat()
+        today = date.today().isoformat()
         transaction = Transaction(
-            id=txn_id,
+            transaction_id=txn_id,
             member_id=member_id,
             item_id=item_id,
             borrow_date=today,
@@ -144,7 +144,7 @@ class Library:
         item.return_item()
         member.return_item(item_id)
 
-        today = datetime.date.today().isoformat()
+        today = date.today().isoformat()
         transaction = active_txns[0]
         transaction.return_date = today
         return transaction
@@ -154,7 +154,7 @@ class Library:
         if not member:
             raise NotFoundError(f"Member with ID {member_id} not found.")
 
-        today = datetime.date.today().isoformat()
+        today = date.today().isoformat()
         for txn in self.transactions:
             if txn.member_id == member_id and txn.is_active():
                 txn.return_date = today
