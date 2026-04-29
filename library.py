@@ -23,6 +23,10 @@ class BorrowingError(Exception):
     """Raised when an item cannot be borrowed or returned."""
     pass
 
+class PersistenceError(Exception):
+    """Raised when there is an error saving or loading data."""
+    pass
+
 class Library:
     def __init__(self):
         self.members = []
@@ -164,3 +168,78 @@ class Library:
 
         self.members = [m for m in self.members if m.id != member_id]
         return True
+
+    def save_to_json(self, file_path: str) -> None:
+        """Save the library data to a JSON file."""
+        data = {
+            "members": [member.to_dict() for member in self.members],
+            "items": [item.to_dict() for item in self.items],
+            "transactions": [txn.to_dict() for txn in self.transactions]
+        }
+        try:
+            with open(file_path, 'w', encoding='utf-8') as file:
+                json.dump(data, file, indent=2, ensure_ascii=False)
+        except OSError as e:
+            raise PersistenceError(f"Error saving to {file_path}: {e}")
+
+    def load_from_json(self, file_path: str) -> bool:
+        """Load the library data from a JSON file."""
+        if not os.path.exists(file_path):
+            return False
+
+        try:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+
+            self.members = [Member.from_dict(member_data) for member_data in data.get("members", [])]
+            self.items = [Item.from_dict(item_data) for item_data in data.get("items", [])]
+            self.transactions = [Transaction.from_dict(txn_data) for txn_data in data.get("transactions", [])]
+
+            return len(self.members) > 0 or len(self.items) > 0 or len(self.transactions) > 0
+        except (OSError, json.JSONDecodeError) as e:
+            raise PersistenceError(f"Error loading from {file_path}: {e}")
+
+    def is_empty(self) -> bool:
+        """Check if the library is empty."""
+        return len(self.members) == 0 and len(self.items) == 0 and len(self.transactions) == 0
+
+    def filter_transactions(
+        self,
+        member_id: int | None = None,
+        item_id: int | None = None,
+        date_from: str | None = None,
+        date_to: str | None = None,
+        status: str | None = None
+    ) -> list[Transaction]:
+        """Filter transactions based on the given criteria."""
+        filtered = self.transactions
+
+        if member_id is not None:
+            filtered = [txn for txn in filtered if txn.member_id == member_id]
+        if item_id is not None:
+            filtered = [txn for txn in filtered if txn.item_id == item_id]
+        if date_from is not None:
+            filtered = [txn for txn in filtered if txn.borrow_date >= date_from]
+        if date_to is not None:
+            filtered = [txn for txn in filtered if txn.borrow_date <= date_to]
+        if status is not None:
+            today = date.today().isoformat()
+            if status == "active":
+                filtered = [txn for txn in filtered if txn.is_active()]
+            elif status == "returned":
+                filtered = [txn for txn in filtered if not txn.is_active()]
+            elif status == "overdue":
+                filtered = [txn for txn in filtered if txn.is_active() and txn.due_date < today]
+
+        return filtered
+
+    def import_from_csv(self, students_path: str, books_path: str, history_path: str) -> None:
+        """Import data from CSV files using DataLoader."""
+        try:
+            # Asumimos que DataLoader es una clase que maneja la importación desde CSV
+            loader = DataLoader()
+            self.members = loader.load_students(students_path)
+            self.items = loader.load_books(books_path)
+            self.transactions = loader.load_history(history_path)
+        except Exception as e:
+            raise e  # Propagamos cualquier error de DataLoader
