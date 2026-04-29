@@ -141,7 +141,7 @@ class Library:
         if not active_txns:
             raise BorrowingError(f"No active transaction for member {member_id} and item {item_id}.")
 
-        item.return_item()
+        item.return_item(member_id)
         member.return_item(item_id)
 
         today = date.today().isoformat()
@@ -160,7 +160,7 @@ class Library:
                 txn.return_date = today
                 item = self.find_item(txn.item_id)
                 if item:
-                    item.return_item()
+                    item.return_item(member_id)
 
         self.members = [m for m in self.members if m.id != member_id]
         return True
